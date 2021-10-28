@@ -4,6 +4,7 @@ fish_vi_key_bindings # Enable vi key bindings
 
 # User defined functions
 
+# Move file to dotfiles, create link
 function dotfile
     mv $argv[1] ~/dotfiles/(basename $argv[1])
     ln -nfs ~/dotfiles/(basename $argv[1]) $argv[1]
@@ -48,6 +49,14 @@ end
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
+
+# Aliases
+alias v="nvim"
+alias g="git"
+alias mkd="mkdir -pv"
+alias d="sudo dnf"
+alias mnt="mount | grep -E ^/dev | column -t"
+alias ghist="history | grep"
 
 # Abbreviations
     # Config file abbreviations
