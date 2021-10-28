@@ -22,13 +22,23 @@ function swapFiles # My function for swapping two files, with tmp files
     mv (echo $argv[1]).swp $argv[2]
 end
 
+function setRandomWallpaper
+    set -l matches ~/Pictures/kittyWallpapers/*.png
+    # Check if any wallpapers (other than current) exist
+    if not test -z $matches # If they do, swap current with random background
+        random (date +%N)
+        set -e FILE1
+        set -l FILE1 (random choice ~/Pictures/kittyWallpapers/*.png)
+        if set -q FILE1
+            swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+        end
+    end
+end
+
 # Greeting (and initialization)
 function fish_greeting
     # Set random background for kitty
-    random (date +%N)
-    set -e FILE1
-    set -l FILE1 (random choice ~/Pictures/kittyWallpapers/*.png)
-    swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+    setRandomWallpaper
     
     # Show catfetch
     catfetch
@@ -54,7 +64,7 @@ end
 alias v="nvim"
 alias g="git"
 alias mkd="mkdir -pv"
-alias d="sudo dnf"
+alias sdnf="sudo dnf"
 alias mnt="mount | grep -E ^/dev | column -t"
 alias ghist="history | grep"
 

@@ -63,6 +63,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'frazrepo/vim-rainbow'
     Plug 'honza/vim-snippets'
+    Plug 'ARM9/arm-syntax-vim'
 
 call plug#end()
 
@@ -72,6 +73,9 @@ if (has("termguicolors"))
 endif
 syntax enable
 colorscheme gruvbox
+
+" Arm support
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
 " Airling theme
 let g:airline_theme='gruvbox'
@@ -84,6 +88,10 @@ inoremap <Return> <Return><Space><BS>
 inoremap {<CR> {<CR>} <Esc>ko<Space><BS>
 nnoremap o o<Space><BS>
 nnoremap O O<Space><BS>
+
+" Move through wrapped text naturally
+nnoremap j gj
+nnoremap k gk
 
 noremap K {
 noremap J }
