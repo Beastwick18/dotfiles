@@ -37,6 +37,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'Pocco81/TrueZen.nvim'
 
 "{{ File management }}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -129,6 +130,11 @@ nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
+
+" Zen mode bindings
+nmap <silent> <leader>zm :TZMinimalist<cr>
+nmap <silent> <leader>zf :TZFocus<cr>
+nmap <silent> <leader>zn :TZAtaraxis <cr> :AirlineRefresh<cr>
 
 " Launch markdown preview binding
 nmap <leader>md <Plug>MarkdownPreview

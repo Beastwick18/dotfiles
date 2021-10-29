@@ -6,7 +6,10 @@ SETUVAR _fish_abbr_awesomec:nvim\x20/home/brad/\x2econfig/awesome/rc\x2elua
 SETUVAR _fish_abbr_fishc:nvim\x20/home/brad/\x2econfig/fish/config\x2efish
 SETUVAR _fish_abbr_kittyUpdate:curl\x20\x2dL\x20https\x3a//sw\x2ekovidgoyal\x2enet/kitty/installer\x2esh\x20\x7c\x20sh\x20/dev/stdin
 SETUVAR _fish_abbr_kittyc:nvim\x20/home/brad/\x2econfig/kitty/kitty\x2econf
+SETUVAR _fish_abbr_mntpi:sshfs\x20pi\x40sbc3662\x3a/home/pi/Desktop/CSE2312\x20/home/brad/rpi
+SETUVAR _fish_abbr_mountpi:sshfs\x20pi\x40sbc3662\x3a/home/pi/Desktop/CSE2312\x20/home/brad/rpi
 SETUVAR _fish_abbr_nvimc:nvim\x20/home/brad/\x2econfig/nvim/init\x2evim
+SETUVAR _fish_abbr_sshpi:ssh\x20pi\x40sbc3662
 SETUVAR chain_links:chain\x2elinks\x2eroot\x1echain\x2elinks\x2ejobs\x1echain\x2elinks\x2epwd\x1echain\x2elinks\x2evcs_branch\x1echain\x2elinks\x2evcs_dirty\x1echain\x2elinks\x2evcs_stashed
 SETUVAR dangerous_nocmdhist:c\x1ed\x1ell\x1els\x1em\x1es
 SETUVAR dangerous_pwdstyle:short\x1elong\x1enone

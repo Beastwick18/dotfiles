@@ -29,7 +29,9 @@ function setRandomWallpaper
         random (date +%N)
         set -e FILE1
         set -l FILE1 (random choice ~/Pictures/kittyWallpapers/*.png)
-        if set -q FILE1
+        if not test -e ~/Pictures/kittyWallpapers/current/current.png   # If no current wallpaper, set random choice to current
+            mv $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+        else if set -q FILE1                                            # Otherwise, swap random wallpaper with current
             swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
         end
     end
@@ -75,6 +77,8 @@ abbr kittyc nvim ~/.config/kitty/kitty.conf
 abbr kittyUpdate 'curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin'
 abbr nvimc nvim ~/.config/nvim/init.vim
 abbr awesomec nvim ~/.config/awesome/rc.lua
+abbr mntpi sshfs pi@sbc3662:/home/pi/Desktop/CSE2312 ~/rpi
+abbr sshpi ssh pi@sbc3662
 
 # Color theme
 set -g theme_color_scheme dracula
