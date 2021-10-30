@@ -1,6 +1,6 @@
 set path+=**
-set rnu                     " Relative number lines
 set showmatch
+set rnu                     " Relative number lines
 set ignorecase
 set mouse=a
 set hlsearch
@@ -13,16 +13,14 @@ set autoindent
 set smarttab
 set number                  " Show line numbers
 set wildmode=longest,list
-" set cc=80
 filetype plugin indent on   " Required for plugins
 syntax on
 set clipboard=unnamedplus   " Copy from os and vice versa
 set noshowmode              " Hide status, since airline already shows
-" set cursorline!
+let mapleader = " "         " Use space as leader
 
 " vs = right, hs = bottom
 set splitbelow splitright
-
 
 " Automatically go into insert when entering a vim terminal, change back to
 " normal when leaving
@@ -65,6 +63,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'frazrepo/vim-rainbow'
     Plug 'honza/vim-snippets'
     Plug 'ARM9/arm-syntax-vim'
+    Plug 'dkarter/bullets.vim'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'godlygeek/tabular'
 
 call plug#end()
 
@@ -74,6 +75,11 @@ if (has("termguicolors"))
 endif
 syntax enable
 colorscheme gruvbox
+
+" Enable latex in markdown
+let g:vim_markdown_math = 1
+" Disable folding in markdown
+let g:vim_markdown_folding_disabled = 1
 
 " Arm support
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
@@ -123,8 +129,13 @@ inoremap <C-j> <Down>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
+" Move line up or down with Alt+(k/j)
+nnoremap <M-k> :m -2<cr>
+nnoremap <M-j> :m +1<cr>
+inoremap <M-k> <right><ESC>:m -2<cr>i
+inoremap <M-j> <right><ESC>:m +1<cr>i
+
 " Coc bindings
-let mapleader = " "
 nmap <leader>rn <Plug>(coc-rename)
 nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jy <Plug>(coc-type-definition)
@@ -132,10 +143,11 @@ nmap <silent> <leader>ji <Plug>(coc-implementation)
 nmap <silent> <leader>jr <Plug>(coc-references)
 
 " Fugitive bindings
-nmap <silent> <leader>gdf :Gdiffsplit<cr>
+nmap <silent> <leader>gd :Gdiffsplit<cr>
 nmap <silent> <leader>gb :GBrowse<cr>
-nmap <silent> <leader>gc :Git commit -m 
-nmap <silent> <leader>ga :Git add .
+nmap <silent> <leader>gc :Git commit<cr> 
+nmap <silent> <leader>ga :Git add .<cr>
+nmap <silent> <leader>gp :Git push<cr>
 
 " Zen mode bindings
 nmap <silent> <leader>zm :TZMinimalist<cr>

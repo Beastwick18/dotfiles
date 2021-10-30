@@ -84,6 +84,7 @@ abbr nvimc nvim ~/.config/nvim/init.vim
 abbr awesomec nvim ~/.config/awesome/rc.lua
 abbr mntpi sshfs pi@sbc3662:/home/pi/Desktop/CSE2312 ~/rpi
 abbr sshpi ssh pi@sbc3662
+abbr ls ll
 
 # Color theme
 set -g theme_color_scheme dracula
