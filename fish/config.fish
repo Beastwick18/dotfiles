@@ -19,8 +19,9 @@ end
 function sudo!!
     eval sudo $history[1]
 end
-
-function swapFiles # My function for swapping two files, with tmp files
+ 
+# My function for swapping two files, with tmp files
+function swapFiles 
     mv $argv[1] (echo $argv[1]).swp
     mv $argv[2] (echo $argv[2]).swp
     mv (echo $argv[2]).swp $argv[1]
