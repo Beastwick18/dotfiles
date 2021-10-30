@@ -102,7 +102,7 @@ noremap L $
 " CHADTree bindings
 nnoremap <C-\> <cmd>CHADopen<CR>
     " Allow moving cwd up a directory in CHADTree
-autocmd FileType CHADTree nmap <silent> <buffer> B :lcd ..<cr>
+autocmd FileType CHADTree nmap <silent> <buffer> B :cd ..<cr>
 
 " ',' repeats last macro
 nnoremap , @@
@@ -126,15 +126,21 @@ inoremap <C-l> <Right>
 " Coc bindings
 let mapleader = " "
 nmap <leader>rn <Plug>(coc-rename)
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>jd <Plug>(coc-definition)
+nmap <silent> <leader>jy <Plug>(coc-type-definition)
+nmap <silent> <leader>ji <Plug>(coc-implementation)
+nmap <silent> <leader>jr <Plug>(coc-references)
+
+" Fugitive bindings
+nmap <silent> <leader>gdf :Gdiffsplit<cr>
+nmap <silent> <leader>gb :GBrowse<cr>
+nmap <silent> <leader>gc :Git commit -m 
+nmap <silent> <leader>ga :Git add .
 
 " Zen mode bindings
 nmap <silent> <leader>zm :TZMinimalist<cr>
 nmap <silent> <leader>zf :TZFocus<cr>
-nmap <silent> <leader>zn :TZAtaraxis <cr> :AirlineRefresh<cr>
+nmap <silent> <leader>zn :TZAtaraxis<cr> :AirlineRefresh<cr>
 
 " Launch markdown preview binding
 nmap <leader>md <Plug>MarkdownPreview

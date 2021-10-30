@@ -4,6 +4,11 @@ fish_vi_key_bindings # Enable vi key bindings
 
 # User defined functions
 
+function mkcd
+    mkdir -pv $argv[1]
+    cd $argv[1]
+end
+
 # Move file to dotfiles, create link
 function dotfile
     mv $argv[1] ~/dotfiles/(basename $argv[1])
@@ -63,7 +68,7 @@ if status is-interactive
 end
 
 # Aliases
-alias v="nvim"
+alias nv="nvim"
 alias g="git"
 alias mkd="mkdir -pv"
 alias sdnf="sudo dnf"
