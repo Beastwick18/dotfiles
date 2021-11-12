@@ -20,7 +20,7 @@ function sudo!!
     eval sudo $history[1]
 end
  
-# My function for swapping two files, with tmp files
+# My function for swapping two files, with swp files
 function swapFiles 
     mv $argv[1] (echo $argv[1]).swp
     mv $argv[2] (echo $argv[2]).swp
@@ -31,16 +31,23 @@ end
 function setRandomWallpaper
     set -l matches ~/Pictures/kittyWallpapers/*.png
     # Check if any wallpapers (other than current) exist
-    if not test -z $matches # If they do, swap current with random background
+    if test -z "$matches" # If they do, swap current with random background
+    else
         random (date +%N)
         set -e FILE1
         set -l FILE1 (random choice ~/Pictures/kittyWallpapers/*.png)
-        if not test -e ~/Pictures/kittyWallpapers/current/current.png   # If no current wallpaper, set random choice to current
-            mv $FILE1 ~/Pictures/kittyWallpapers/current/current.png
-        else if set -q FILE1                                            # Otherwise, swap random wallpaper with current
-            swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+        if set -q FILE1
+            # swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+            cp $FILE1 ~/Pictures/kittyWallpapers/current/current.png
         end
     end
+end
+
+# Set default fish terminal title
+function fish_title
+    set -q argv[1]; or set argv fish
+    set -l dir (fish_prompt_pwd_dir_length=1 prompt_pwd)
+    echo "$argv ($dir)";
 end
 
 # Greeting (and initialization)
@@ -76,6 +83,10 @@ alias sdnf="sudo dnf"
 alias mnt="mount | grep -E ^/dev | column -t"
 alias ghist="history | grep"
 
+# Kitten aliases
+alias icat="kitty +kitten icat"
+alias ssh="kitty +kitten ssh"
+
 # Abbreviations
     # Config file abbreviations
 abbr fishc nvim ~/.config/fish/config.fish
@@ -84,8 +95,9 @@ abbr kittyUpdate 'curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev
 abbr nvimc nvim ~/.config/nvim/init.vim
 abbr awesomec nvim ~/.config/awesome/rc.lua
 abbr mntpi sshfs pi@sbc3662:/home/pi/Desktop/CSE2312 ~/rpi
+abbr umntpi umount ~/rpi
 abbr sshpi ssh pi@sbc3662
-abbr ls ll
+abbr sshomega ssh -oKexAlgorithms=+diffie-hellman-group-exchange-sha1 sbc3662@omega.uta.edu
 
 # Color theme
 set -g theme_color_scheme dracula

@@ -1,4 +1,5 @@
 set path+=**
+set title                   " Set terminal title
 set showmatch
 set rnu                     " Relative number lines
 set ignorecase
@@ -31,7 +32,6 @@ tnoremap <Esc> <C-\><C-n>
 
 call plug#begin('~/.vim/plugged')
 "{{ Theming }}
-    Plug 'dracula/vim'
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -44,11 +44,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
     Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-    Plug 'kyazdani42/nvim-tree.lua'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 "{{ Tim Pope }}
     Plug 'tpope/vim-surround'
@@ -59,6 +56,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'cespare/vim-toml', { 'branch': 'main' }
     Plug 'dag/vim-fish'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'frazrepo/vim-rainbow'
     Plug 'honza/vim-snippets'
@@ -66,9 +64,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'dkarter/bullets.vim'
     Plug 'plasticboy/vim-markdown'
     Plug 'godlygeek/tabular'
+    Plug 'fladson/vim-kitty'
+    Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+"{{ Other }}
+    " Plug 'kana/vim-submode'
 
 call plug#end()
-
+" call window_submode#WindowSubmodeKeybinds()
 " color schemes
 if (has("termguicolors"))
  set termguicolors
@@ -76,10 +79,19 @@ endif
 syntax enable
 colorscheme gruvbox
 
+augroup Chad
+    autocmd!
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'CHADopen' | wincmd p | ene | exe 'cd '.argv()[0] | endif
+augroup END
+
 " Enable latex in markdown
 let g:vim_markdown_math = 1
 " Disable folding in markdown
 let g:vim_markdown_folding_disabled = 1
+
+" Enable vim-rainbow globally
+let g:rainbow_active = 1
 
 " Arm support
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
@@ -109,19 +121,26 @@ noremap L $
 nnoremap <C-\> <cmd>CHADopen<CR>
     " Allow moving cwd up a directory in CHADTree
 autocmd FileType CHADTree nmap <silent> <buffer> B :cd ..<cr>
+    " Close chadtree if it is the last window open
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == "CHADTree") | q | endif
 
 " ',' repeats last macro
 nnoremap , @@
 
+" cib, dib, etc. don't do anything, rebind to ciB, ...
+nnoremap cib ciB
+nnoremap dib diB
+nnoremap vib viB
+
 " Tab and S-Tab control indentation in normal mode
 nnoremap <Tab> >>
 nnoremap <S-Tab> <<
-vnoremap <Tab> >>
-vnoremap <S-Tab> <<
+vnoremap <Tab> >
+vnoremap <S-Tab> <
 
 " Telescope bindings
-noremap <C-p> :Telescope find_files <CR>
-noremap <C-f> :Telescope treesitter<CR>
+" noremap <C-p> :Telescope find_files <CR>
+" noremap <C-f> :Telescope treesitter<CR>
 
 " Movement keys while in insert mode
 inoremap <C-k> <Up>
@@ -137,7 +156,7 @@ inoremap <M-j> <right><ESC>:m +1<cr>i
 
 " Coc bindings
 nmap <leader>rn <Plug>(coc-rename)
-nmap <silent> <leader>jd <Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> <leader>jy <Plug>(coc-type-definition)
 nmap <silent> <leader>ji <Plug>(coc-implementation)
 nmap <silent> <leader>jr <Plug>(coc-references)
@@ -155,18 +174,8 @@ nmap <silent> <leader>zf :TZFocus<cr>
 nmap <silent> <leader>zn :TZAtaraxis<cr> :AirlineRefresh<cr>
 
 " Launch markdown preview binding
-nmap <leader>md <Plug>MarkdownPreview
-
-" Tab selects coc dropdown option
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+nmap <leader>md <Plug>MarkdownPreviewToggle
 
 " Remove vim bg, so kitty bg image will show
 hi Normal guibg=none ctermbg=none
+
