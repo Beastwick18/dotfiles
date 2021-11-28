@@ -18,7 +18,18 @@ filetype plugin indent on   " Required for plugins
 syntax on
 set clipboard=unnamedplus   " Copy from os and vice versa
 set noshowmode              " Hide status, since airline already shows
+set foldmethod=syntax       " Fold based on syntax
+set nofoldenable
+set foldlevel=99
 let mapleader = " "         " Use space as leader
+set encoding=utf-8
+set fileencoding=utf-8
+set noswapfile
+set nohlsearch
+set nobackup
+filetype plugin on
+set conceallevel=2
+
 
 " vs = right, hs = bottom
 set splitbelow splitright
@@ -31,12 +42,12 @@ autocmd BufLeave term://* stopinsert
 tnoremap <Esc> <C-\><C-n>
 
 call plug#begin('~/.vim/plugged')
-"{{ Theming }}
+"{{ Theming
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'Pocco81/TrueZen.nvim'
-
+    
 "{{ File management }}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'mhinz/vim-startify'
@@ -51,6 +62,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-repeat'
 
 "{{ Syntax }}
     Plug 'cespare/vim-toml', { 'branch': 'main' }
@@ -65,19 +77,44 @@ call plug#begin('~/.vim/plugged')
     Plug 'plasticboy/vim-markdown'
     Plug 'godlygeek/tabular'
     Plug 'fladson/vim-kitty'
-    Plug 'jackguo380/vim-lsp-cxx-highlight'
+    Plug 'nvim-telescope/telescope.nvim'
 
 "{{ Other }}
     " Plug 'kana/vim-submode'
+    Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
 call plug#end()
-" call window_submode#WindowSubmodeKeybinds()
+
+" Set vim commentary to use // for c and c++ file types
+aug commentary
+    au!
+    au FileType c,cpp,s setlocal commentstring=//%s
+aug END
+
+let g:gruvbox_contrast_dark='hard'
+let g:italicize_strings=1
+let g:gruvbox_italic=1
+" let g:gruvbox_improved_strings=1
+let g:gruvbox_improved_warnings=1
+
+let g:vimwiki_global_ext = 0
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_root = '~/VimWiki'
+let g:vimwiki_listsyms = '✗○◐●✓'
+let g:vimwiki_list = [{'path': '~/VimWiki', 'syntax': 'markdown', 'ext': '.md'}]
+autocmd FileType vimwiki set ft=markdown
+
+noremap ;w :w<CR>
+noremap ;q :q<CR>
+noremap ' `
+
+noremap <leader>w <C-w>
+
 " color schemes
 if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
-colorscheme gruvbox
 
 augroup Chad
     autocmd!
@@ -94,8 +131,15 @@ let g:vim_markdown_folding_disabled = 1
 let g:rainbow_active = 1
 
 " Arm support
-au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+augroup Arm
+    au!
+    au FileType s,S setfiletype arm
+    au FileType s,S set syntax=arm
+    " au WinNew,BufWinEnter,WinEnter,BufNewFile,BufRead,BufReadPost *.s,*.S setfiletype arm " arm = armv6/7
+    " au WinNew,BufWinEnter,WinEnter,BufNewFile,BufRead,BufReadPost *.s,*.S set syntax=arm " arm = armv6/7
+augroup END
 
+colorscheme gruvbox
 " Airling theme
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
@@ -103,17 +147,17 @@ let g:airline_powerline_fonts = 1
 autocmd VimEnter * silent AirlineToggleWhitespace
 
 " Make tabs persist
-inoremap <Return> <Return><Space><BS>
-inoremap {<CR> {<CR>} <Esc>ko<Space><BS>
-nnoremap o o<Space><BS>
-nnoremap O O<Space><BS>
+imap <Return> <Return><Space><BS>
+inoremap {<CR> {<CR>}<Esc>O<Space><BS>
+nmap o o<Space><BS>
+nmap O O<Space><BS>
 
 " Move through wrapped text naturally
 nnoremap j gj
 nnoremap k gk
 
-noremap K {
-noremap J }
+map K {
+map J }
 noremap H ^
 noremap L $
 
@@ -123,6 +167,11 @@ nnoremap <C-\> <cmd>CHADopen<CR>
 autocmd FileType CHADTree nmap <silent> <buffer> B :cd ..<cr>
     " Close chadtree if it is the last window open
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == "CHADTree") | q | endif
+let g:chadtree_settings = {
+    \ 'keymap.jump_to_current': [],
+    \ 'keymap.stat': [],
+    \ 'keymap.toggle_version_control': ['z']
+\} 
 
 " ',' repeats last macro
 nnoremap , @@
@@ -131,6 +180,7 @@ nnoremap , @@
 nnoremap cib ciB
 nnoremap dib diB
 nnoremap vib viB
+nnoremap zfib zfiB
 
 " Tab and S-Tab control indentation in normal mode
 nnoremap <Tab> >>
@@ -139,14 +189,17 @@ vnoremap <Tab> >
 vnoremap <S-Tab> <
 
 " Telescope bindings
-" noremap <C-p> :Telescope find_files <CR>
-" noremap <C-f> :Telescope treesitter<CR>
+noremap <silent> <leader>ff :Telescope current_buffer_fuzzy_find<CR>
+noremap <silent> <leader>fl :Telescope find_files<CR>
+noremap <silent> <leader>gs :Telescope git_status<CR>
+noremap <silent> <leader>gsh :Telescope git_stash<CR>
+noremap <silent> <leader>ts :Telescope treesitter<CR>
 
 " Movement keys while in insert mode
-inoremap <C-k> <Up>
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+imap <C-k> <Up>
+imap <C-j> <Down>
+imap <C-h> <Left>
+imap <C-l> <Right>
 
 " Move line up or down with Alt+(k/j)
 nnoremap <M-k> :m -2<cr>
@@ -156,6 +209,7 @@ inoremap <M-j> <right><ESC>:m +1<cr>i
 
 " Coc bindings
 nmap <leader>rn <Plug>(coc-rename)
+nmap cn <Plug>(coc-rename)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> <leader>jy <Plug>(coc-type-definition)
 nmap <silent> <leader>ji <Plug>(coc-implementation)
@@ -178,4 +232,22 @@ nmap <leader>md <Plug>MarkdownPreviewToggle
 
 " Remove vim bg, so kitty bg image will show
 hi Normal guibg=none ctermbg=none
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "vim" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
 

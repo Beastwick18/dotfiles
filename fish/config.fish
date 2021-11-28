@@ -1,6 +1,6 @@
 # ~/.config/fish/config.fish
 
-fish_vi_key_bindings # Enable vi key bindings
+# fish_vi_key_bindings # Enable vi key bindings
 
 # User defined functions
 
