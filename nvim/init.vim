@@ -47,6 +47,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'Pocco81/TrueZen.nvim'
+    Plug 'Mofiqul/dracula.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim'
     
 "{{ File management }}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -68,9 +70,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'cespare/vim-toml', { 'branch': 'main' }
     Plug 'dag/vim-fish'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Plug 'jackguo380/vim-lsp-cxx-highlight'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'frazrepo/vim-rainbow'
+    Plug 'p00f/nvim-ts-rainbow'
+    " Plug 'frazrepo/vim-rainbow'
     Plug 'honza/vim-snippets'
     Plug 'ARM9/arm-syntax-vim'
     Plug 'dkarter/bullets.vim'
@@ -78,6 +81,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'godlygeek/tabular'
     Plug 'fladson/vim-kitty'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'tikhomirov/vim-glsl'
 
 "{{ Other }}
     " Plug 'kana/vim-submode'
@@ -89,6 +93,7 @@ call plug#end()
 aug commentary
     au!
     au FileType c,cpp,s setlocal commentstring=//%s
+    au FileType vert,frag,tesc,tese,geom,comp,glsl,vs,fs setlocal commentstring=//%s
 aug END
 
 let g:gruvbox_contrast_dark='hard'
@@ -139,9 +144,10 @@ augroup Arm
     " au WinNew,BufWinEnter,WinEnter,BufNewFile,BufRead,BufReadPost *.s,*.S set syntax=arm " arm = armv6/7
 augroup END
 
-colorscheme gruvbox
+colorscheme dracula
+" colorscheme gruvbox
 " Airling theme
-let g:airline_theme='gruvbox'
+let g:airline_theme='dracula'
 let g:airline_powerline_fonts = 1
     " Disable airline trailing whitespace warning
 autocmd VimEnter * silent AirlineToggleWhitespace
@@ -209,6 +215,7 @@ inoremap <M-j> <right><ESC>:m +1<cr>i
 
 " Coc bindings
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>qf <Plug>(coc-fix-current)
 nmap cn <Plug>(coc-rename)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> <leader>jy <Plug>(coc-type-definition)
@@ -240,12 +247,20 @@ require'nvim-treesitter.configs'.setup {
   ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
-    disable = { "vim" },  -- list of language that will be disabled
+    -- disable = { "vim" },  -- list of language that will be disabled
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
+  },
+  rainbow = {
+    enable = true,
+    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
   },
 }
 EOF
