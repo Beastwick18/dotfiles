@@ -82,6 +82,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'fladson/vim-kitty'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'tikhomirov/vim-glsl'
+    Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 "{{ Other }}
     " Plug 'kana/vim-submode'
@@ -111,6 +112,7 @@ autocmd FileType vimwiki set ft=markdown
 
 noremap ;w :w<CR>
 noremap ;q :q<CR>
+noremap ;Q :q!<CR>
 noremap ' `
 
 noremap <leader>w <C-w>
@@ -186,6 +188,7 @@ nnoremap , @@
 nnoremap cib ciB
 nnoremap dib diB
 nnoremap vib viB
+nnoremap yib yiB
 nnoremap zfib zfiB
 
 " Tab and S-Tab control indentation in normal mode
