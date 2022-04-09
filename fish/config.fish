@@ -4,6 +4,79 @@
 
 # User defined functions
 
+function kittybg
+    function list
+        tput bold
+        tput smul
+        printf "Next:\n"
+        tput sgr0
+        set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+        tput setaf 6; echo -e "\e]8;;file:///home/brad/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+        tput sgr0
+        
+        tput bold
+        tput smul
+        echo -e '\n\e]8;;file:///home/brad/Pictures/kittyWallpapers/\aEnabled:\e]8;;\a'
+        tput sgr0
+        tput setaf 10; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.png' | sed -e 's/\.png$//' | cat
+        tput sgr0
+        tput bold
+        tput smul
+        echo -e '\n\e]8;;file:///home/brad/Pictures/kittyWallpapers/disabled/\aDisabled:\e]8;;\a'
+        tput sgr0
+        tput setaf 1; ls -1 /home/$USER/Pictures/kittyWallpapers/disabled | sed -e 's/\.png$//' | cat
+        tput sgr0
+    end
+    if test (count $argv) -lt 1
+        list
+    else if [ "$argv[1]" = "l" -o "$argv[1]" = "list" -o ]
+        list
+    else if [ "$argv[1]" = "r" -o "$argv[1]" = "random" ]
+        setRandomWallpaper
+        tput bold
+        tput smul
+        printf "Next:\n"
+        tput sgr0
+        tput setaf 6; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | cat | sed -e 's/\.next$//' | cat
+        tput sgr0
+    else if test (count $argv) -lt 2
+        echo "Usage: kittybg [command] [name]"
+        return
+    else if [ "$argv[1]" = "e" -o "$argv[1]" = "enable" ]
+        if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+            mv /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/
+        else
+            echo "There is no disabled wallpaper named $argv[2].png"
+        end
+    else if [ "$argv[1]" = "d" -o "$argv[1]" = "disable" ]
+        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+            mv /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/disabled/
+        else
+            echo "There is no enabled wallpaper named $argv[2].png"
+        end
+    else if [ "$argv[1]" = "s" -o "$argv[1]" = "set" ]
+        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+            cp /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+        else if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+            cp /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+        else
+            echo "There is no wallpaper named $argv[2].png"
+            return
+        end
+        rm ~/Pictures/kittyWallpapers/*.next
+        touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
+        
+        tput bold
+        tput smul
+        printf "Next:\n"
+        tput sgr0
+        tput setaf 6; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | cat | sed -e 's/\.next$//' | cat
+        tput sgr0
+    else
+        echo "Usage: kittybg -ledsr [name]"
+    end
+end
+
 function mkcd
     mkdir -pv $argv[1]
     cd $argv[1]
@@ -39,6 +112,8 @@ function setRandomWallpaper
         if set -q FILE1
             # swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
             cp $FILE1 ~/Pictures/kittyWallpapers/current/current.png
+            rm ~/Pictures/kittyWallpapers/*.next
+            touch (echo "$FILE1" | sed -e 's/\.png$//').next
         end
     end
 end
@@ -82,6 +157,7 @@ alias mkd="mkdir -pv"
 alias sdnf="sudo dnf"
 alias mnt="mount | grep -E ^/dev | column -t"
 alias ghist="history | grep"
+alias kbg="kittybg"
 
 # Kitten aliases
 alias icat="kitty +kitten icat"
@@ -102,3 +178,4 @@ abbr sshomega ssh -oKexAlgorithms=+diffie-hellman-group-exchange-sha1 sbc3662@om
 # Color theme
 set -g theme_color_scheme dracula
 
+fish_add_path $HOME/apps/kotlin/bin
