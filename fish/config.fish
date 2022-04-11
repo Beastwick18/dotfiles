@@ -11,67 +11,84 @@ function kittybg
         printf "Next:\n"
         tput sgr0
         set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
-        tput setaf 6; echo -e "\e]8;;file:///home/brad/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+        tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
         tput sgr0
         
         tput bold
         tput smul
-        echo -e '\n\e]8;;file:///home/brad/Pictures/kittyWallpapers/\aEnabled:\e]8;;\a'
+        echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/\aEnabled:\e]8;;\a"
         tput sgr0
         tput setaf 10; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.png' | sed -e 's/\.png$//' | cat
         tput sgr0
         tput bold
         tput smul
-        echo -e '\n\e]8;;file:///home/brad/Pictures/kittyWallpapers/disabled/\aDisabled:\e]8;;\a'
+        echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/\aDisabled:\e]8;;\a"
         tput sgr0
         tput setaf 1; ls -1 /home/$USER/Pictures/kittyWallpapers/disabled | sed -e 's/\.png$//' | cat
         tput sgr0
+        
+        functions -e list
     end
-    if test (count $argv) -lt 1
+    if test (count $argv) -lt 1 -o "$argv[1]" = "l" -o "$argv[1]" = "list" -o
         list
-    else if [ "$argv[1]" = "l" -o "$argv[1]" = "list" -o ]
-        list
-    else if [ "$argv[1]" = "r" -o "$argv[1]" = "random" ]
+    else if test "$argv[1]" = "r" -o "$argv[1]" = "random"
         setRandomWallpaper
-        tput bold
-        tput smul
-        printf "Next:\n"
-        tput sgr0
-        tput setaf 6; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | cat | sed -e 's/\.next$//' | cat
-        tput sgr0
-    else if test (count $argv) -lt 2
-        echo "Usage: kittybg [command] [name]"
-        return
-    else if [ "$argv[1]" = "e" -o "$argv[1]" = "enable" ]
-        if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
-            mv /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/
-        else
-            echo "There is no disabled wallpaper named $argv[2].png"
-        end
-    else if [ "$argv[1]" = "d" -o "$argv[1]" = "disable" ]
-        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
-            mv /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/disabled/
-        else
-            echo "There is no enabled wallpaper named $argv[2].png"
-        end
-    else if [ "$argv[1]" = "s" -o "$argv[1]" = "set" ]
-        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
-            cp /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
-        else if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
-            cp /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
-        else
-            echo "There is no wallpaper named $argv[2].png"
-            return
-        end
-        rm ~/Pictures/kittyWallpapers/*.next
-        touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
         
         tput bold
         tput smul
         printf "Next:\n"
         tput sgr0
-        tput setaf 6; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | cat | sed -e 's/\.next$//' | cat
+        set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+        tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
         tput sgr0
+        
+    else if test (count $argv) -lt 2
+        echo "Usage: kittybg [command] [name]"
+        return
+    else if test "$argv[1]" = "e" -o "$argv[1]" = "enable"
+        if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+            mv /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/
+        else
+            echo "There is no disabled wallpaper named $argv[2].png"
+        end
+    else if test "$argv[1]" = "d" -o "$argv[1]" = "disable"
+        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+            mv /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/disabled/
+        else
+            echo "There is no enabled wallpaper named $argv[2].png"
+        end
+    else if test "$argv[1]" = "s" -o "$argv[1]" = "set"
+        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+            cp /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+            rm /home/$USER/Pictures/kittyWallpapers/*.next
+            touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
+            
+            tput bold
+            tput smul
+            printf "Next:\n"
+            tput sgr0
+            set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+            tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+            tput sgr0
+        else if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+            cp /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+            rm /home/$USER/Pictures/kittyWallpapers/*.next
+            touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
+            
+            tput bold
+            tput smul
+            printf "Next:\n"
+            tput sgr0
+            set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+            tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/$NEXT.png\a$NEXT\e]8;;\a"
+            tput sgr0
+        else
+            echo "There is no wallpaper named $argv[2].png"
+            return
+        end
+        
+    else if test "$argv[1]" = "a" -o "$argv[1]" = "add"
+        java -jar /home/$USER/Documents/javaDimmer/Dimmer.jar $argv[2] /home/$USER/Pictures/kittyWallpapers/(echo (basename $argv[2] | string split -r -m1 .)[1]).png
     else
         echo "Usage: kittybg -ledsr [name]"
     end
@@ -102,17 +119,17 @@ function swapFiles
 end
 
 function setRandomWallpaper
-    set -l matches ~/Pictures/kittyWallpapers/*.png
+    set -l matches /home/$USER/Pictures/kittyWallpapers/*.png
     # Check if any wallpapers (other than current) exist
     if test -z "$matches" # If they do, swap current with random background
     else
         random (date +%N)
         set -e FILE1
-        set -l FILE1 (random choice ~/Pictures/kittyWallpapers/*.png)
+        set -l FILE1 (random choice /home/$USER/Pictures/kittyWallpapers/*.png)
         if set -q FILE1
             # swapFiles $FILE1 ~/Pictures/kittyWallpapers/current/current.png
-            cp $FILE1 ~/Pictures/kittyWallpapers/current/current.png
-            rm ~/Pictures/kittyWallpapers/*.next
+            cp $FILE1 /home/$USER/Pictures/kittyWallpapers/current/current.png
+            rm /home/$USER/Pictures/kittyWallpapers/*.next
             touch (echo "$FILE1" | sed -e 's/\.png$//').next
         end
     end
