@@ -1,0 +1,39 @@
+# Open rofi menu when just super key is pressed
+alt + F1
+    key-menu
+
+super + {1-9}
+    bspc desktop -f '^{1-9}'
+
+super + space
+    playerctl play-pause
+
+~button3
+    xqp 0 $(xdo id -N Bspwm -n root) && jgmenu_run 
+
+super + Return
+    kitty
+
+super + b
+    brave-browser
+
+super + {_,alt + }c
+	bspc node -{c,k}
+
+# quit or restart bspwm
+super + ctrl + {q,r}
+	bspc {quit,wm -r}
+
+# change the window state
+alt + {t,ctrl + t,l,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + ctrl + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+super + {_,shift+}{h, j, k, l}
+	bspc node -{f,s} {west,south,north,east}
