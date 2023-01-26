@@ -3,19 +3,21 @@
 # Start pulseaudio
 # start-pulseaudio-x11
 
-killall -9 picom sxhkd
+killall -9 picom sxhkd ksuperkey batsignal
+# killall -9 picom sxhkd 
 
-xsetroot -cursor_name left_ptr
-sxhkd &
-bash "$HOME"/.config/bspwm/launch_discord.sh &
- 
+bash "$HOME"/.config/bspwm/autostart.sh &
+
+# VLC fullscreen controls fix
+bspc rule --add vlc:vlc border=off layer=above
+
 bspc config border_width	2
 bspc config window_gap		0
- 
+
 bspc config split_ratio		0.62
 bspc config focus_follows_pointer	true
 bspc config pointer_modifier	mod1
- 
+
 bspc config automatic_scheme	spiral
 bspc config pointer_motion_interval 6
 
@@ -28,7 +30,7 @@ bash "$HOME"/.config/bspwm/monitor/bspc_monitor.sh &
 # 		let name++
 # 	done
 # }
-bspc monitor "DP-4" -d '' '' '' ''
+bspc monitor "eDP-1" -d '' '' '' ''
 # workspaces
 
 # Enable Super Keys For Menu
@@ -55,9 +57,8 @@ bspc config pointer_modifier mod4
 bspc config pointer_action1 move
 bspc config pointer_action2 resize_corner
 
-
-
 # Wallpaper
+# /home/brad/.local/bin/kittybg random
 bash "$HOME"/.config/bspwm/.fehbg &
 
 # Start compositor

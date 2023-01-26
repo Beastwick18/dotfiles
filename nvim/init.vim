@@ -27,8 +27,12 @@ set fileencoding=utf-8
 set noswapfile
 set nohlsearch
 set nobackup
+set ch=0
 filetype plugin on
 set conceallevel=2
+
+map <F1> <nop>
+imap <F1> <nop>
 
 
 " vs = right, hs = bottom
@@ -41,7 +45,7 @@ autocmd BufLeave term://* stopinsert
 " Use escape to go back to normal mode while in terminal mode
 tnoremap <Esc> <C-\><C-n>
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 "{{ Theming
     Plug 'morhetz/gruvbox'
     " Plug 'ghifarit53/tokyonight-vim'
@@ -50,7 +54,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'Pocco81/TrueZen.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
-    
+    Plug 'xiyaowong/nvim-transparent'
+
 "{{ File management }}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'mhinz/vim-startify'
@@ -66,6 +71,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-sleuth'
 
 "{{ Syntax }}
     Plug 'cespare/vim-toml', { 'branch': 'main' }
@@ -90,6 +96,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
 call plug#end()
+
+let g:transparent_enabled = v:true
 
 " Set vim commentary to use // for c and c++ file types
 aug commentary
@@ -164,10 +172,12 @@ EOF
 " colorscheme dracula
 " colorscheme gruvbox
 " Airling theme
-let g:airline_theme='tokyonight'
+" let g:airline_theme='tokyonight'
 let g:airline_powerline_fonts = 1
     " Disable airline trailing whitespace warning
 autocmd VimEnter * silent AirlineToggleWhitespace
+
+
 
 " Make tabs persist
 imap <Return> <Return><Space><BS>
@@ -186,6 +196,7 @@ noremap L $
 
 " CHADTree bindings
 nnoremap <C-\> <cmd>CHADopen<CR>
+inoremap <C-\> <cmd>CHADopen<CR>
     " Allow moving cwd up a directory in CHADTree
 autocmd FileType CHADTree nmap <silent> <buffer> B :cd ..<cr>
     " Close chadtree if it is the last window open
@@ -211,6 +222,8 @@ nnoremap <Tab> >>
 nnoremap <S-Tab> <<
 vnoremap <Tab> >
 vnoremap <S-Tab> <
+inoremap <S-Tab> <Esc><<a
+imap <tab> <esc><tab>4la
 
 " Telescope bindings
 noremap <silent> <leader>ff :Telescope current_buffer_fuzzy_find<CR>
@@ -246,6 +259,9 @@ nmap <silent> <leader>gb :GBrowse<cr>
 nmap <silent> <leader>gc :Git commit<cr> 
 nmap <silent> <leader>ga :Git add .<cr>
 nmap <silent> <leader>gp :Git push<cr>
+
+nmap <silent> <C-j> <Plug>(VM-Add-Cursor-Down)
+nmap <silent> <C-k> <Plug>(VM-Add-Cursor-Up)
 
 " Zen mode bindings
 nmap <silent> <leader>zm :TZMinimalist<cr>

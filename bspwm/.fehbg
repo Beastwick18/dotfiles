@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --bg-fill ~/Pictures/kittyWallpapers/current/current.png
+feh --no-fehbg --bg-fill ~/pics/kittyWallpapers/current/current.png

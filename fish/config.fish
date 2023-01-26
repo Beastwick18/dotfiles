@@ -4,95 +4,95 @@
 
 # User defined functions
 
-function kittybg
-    function list
-        tput bold
-        tput smul
-        printf "Next:\n"
-        tput sgr0
-        set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
-        tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
-        tput sgr0
+# function kittybg
+#     function list
+#         tput bold
+#         tput smul
+#         printf "Next:\n"
+#         tput sgr0
+#         set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+#         tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+#         tput sgr0
         
-        tput bold
-        tput smul
-        echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/\aEnabled:\e]8;;\a"
-        tput sgr0
-        tput setaf 10; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.png' | sed -e 's/\.png$//' | cat
-        tput sgr0
-        tput bold
-        tput smul
-        echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/\aDisabled:\e]8;;\a"
-        tput sgr0
-        tput setaf 1; ls -1 /home/$USER/Pictures/kittyWallpapers/disabled | sed -e 's/\.png$//' | cat
-        tput sgr0
+#         tput bold
+#         tput smul
+#         echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/\aEnabled:\e]8;;\a"
+#         tput sgr0
+#         tput setaf 10; ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.png' | sed -e 's/\.png$//' | cat
+#         tput sgr0
+#         tput bold
+#         tput smul
+#         echo -e "\n\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/\aDisabled:\e]8;;\a"
+#         tput sgr0
+#         tput setaf 1; ls -1 /home/$USER/Pictures/kittyWallpapers/disabled | sed -e 's/\.png$//' | cat
+#         tput sgr0
         
-        functions -e list
-    end
-    if test (count $argv) -lt 1 -o "$argv[1]" = "l" -o "$argv[1]" = "list" -o
-        list
-    else if test "$argv[1]" = "r" -o "$argv[1]" = "random"
-        setRandomWallpaper
+#         functions -e list
+#     end
+#     if test (count $argv) -lt 1 -o "$argv[1]" = "l" -o "$argv[1]" = "list" -o
+#         list
+#     else if test "$argv[1]" = "r" -o "$argv[1]" = "random"
+#         setRandomWallpaper
         
-        tput bold
-        tput smul
-        printf "Next:\n"
-        tput sgr0
-        set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
-        tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
-        tput sgr0
+#         tput bold
+#         tput smul
+#         printf "Next:\n"
+#         tput sgr0
+#         set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+#         tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+#         tput sgr0
         
-    else if test (count $argv) -lt 2
-        echo "Usage: kittybg [command] [name]"
-        return
-    else if test "$argv[1]" = "e" -o "$argv[1]" = "enable"
-        if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
-            mv /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/
-        else
-            echo "There is no disabled wallpaper named $argv[2].png"
-        end
-    else if test "$argv[1]" = "d" -o "$argv[1]" = "disable"
-        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
-            mv /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/disabled/
-        else
-            echo "There is no enabled wallpaper named $argv[2].png"
-        end
-    else if test "$argv[1]" = "s" -o "$argv[1]" = "set"
-        if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
-            cp /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
-            rm /home/$USER/Pictures/kittyWallpapers/*.next
-            touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
+#     else if test (count $argv) -lt 2
+#         echo "Usage: kittybg [command] [name]"
+#         return
+#     else if test "$argv[1]" = "e" -o "$argv[1]" = "enable"
+#         if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+#             mv /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/
+#         else
+#             echo "There is no disabled wallpaper named $argv[2].png"
+#         end
+#     else if test "$argv[1]" = "d" -o "$argv[1]" = "disable"
+#         if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+#             mv /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/disabled/
+#         else
+#             echo "There is no enabled wallpaper named $argv[2].png"
+#         end
+#     else if test "$argv[1]" = "s" -o "$argv[1]" = "set"
+#         if test -e "/home/$USER/Pictures/kittyWallpapers/$argv[2].png"
+#             cp /home/$USER/Pictures/kittyWallpapers/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+#             rm /home/$USER/Pictures/kittyWallpapers/*.next
+#             touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
             
-            tput bold
-            tput smul
-            printf "Next:\n"
-            tput sgr0
-            set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
-            tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
-            tput sgr0
-        else if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
-            cp /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
-            rm /home/$USER/Pictures/kittyWallpapers/*.next
-            touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
+#             tput bold
+#             tput smul
+#             printf "Next:\n"
+#             tput sgr0
+#             set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+#             tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/$NEXT.png\a$NEXT\e]8;;\a"
+#             tput sgr0
+#         else if test -e "/home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png"
+#             cp /home/$USER/Pictures/kittyWallpapers/disabled/$argv[2].png /home/$USER/Pictures/kittyWallpapers/current/current.png
+#             rm /home/$USER/Pictures/kittyWallpapers/*.next
+#             touch /home/$USER/Pictures/kittyWallpapers/$argv[2].next
             
-            tput bold
-            tput smul
-            printf "Next:\n"
-            tput sgr0
-            set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
-            tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/$NEXT.png\a$NEXT\e]8;;\a"
-            tput sgr0
-        else
-            echo "There is no wallpaper named $argv[2].png"
-            return
-        end
+#             tput bold
+#             tput smul
+#             printf "Next:\n"
+#             tput sgr0
+#             set -l NEXT (ls -1 /home/$USER/Pictures/kittyWallpapers/ | grep '.next' | awk -F[.][n][e][x][t]\$ '{print $1}')
+#             tput setaf 6; echo -e "\e]8;;file:///home/$USER/Pictures/kittyWallpapers/disabled/$NEXT.png\a$NEXT\e]8;;\a"
+#             tput sgr0
+#         else
+#             echo "There is no wallpaper named $argv[2].png"
+#             return
+#         end
         
-    else if test "$argv[1]" = "a" -o "$argv[1]" = "add"
-        java -jar /home/$USER/Documents/javaDimmer/Dimmer.jar $argv[2] /home/$USER/Pictures/kittyWallpapers/(echo (basename $argv[2] | string split -r -m1 .)[1]).png
-    else
-        echo "Usage: kittybg -ledsr [name]"
-    end
-end
+#     else if test "$argv[1]" = "a" -o "$argv[1]" = "add"
+#         java -jar /home/$USER/Documents/javaDimmer/Dimmer.jar $argv[2] /home/$USER/Pictures/kittyWallpapers/(echo (basename $argv[2] | string split -r -m1 .)[1]).png
+#     else
+#         echo "Usage: kittybg -ledsr [name]"
+#     end
+# end
 
 function mkcd
     mkdir -pv $argv[1]
@@ -148,7 +148,9 @@ function fish_greeting
     setRandomWallpaper
     
     # Show catfetch
-    catfetch
+    echo ""
+    pfetch
+    # catfetch
 end
 
 # Keybindings
@@ -175,6 +177,8 @@ alias sdnf="sudo dnf"
 alias mnt="mount | grep -E ^/dev | column -t"
 alias ghist="history | grep"
 alias kbg="kittybg"
+alias rwp="kittybg random --silent; bash ~/.config/bspwm/.fehbg"
+alias uwp="bash ~/.config/bspwm/.fehbg"
 
 # Kitten aliases
 alias icat="kitty +kitten icat"
@@ -187,6 +191,8 @@ abbr kittyc nvim ~/.config/kitty/kitty.conf
 abbr kittyUpdate 'curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin'
 abbr nvimc nvim ~/.config/nvim/init.vim
 abbr awesomec nvim ~/.config/awesome/rc.lua
+abbr bspwmc nvim ~/.config/bspwm/bspwmrc
+abbr sxhkdc nvim ~/.config/sxhkd/sxhkdrc
 abbr mntpi sshfs pi@sbc3662:/home/pi/Desktop/CSE2312 ~/rpi
 abbr umntpi umount ~/rpi
 abbr sshpi ssh pi@sbc3662
@@ -194,5 +200,7 @@ abbr sshomega ssh -oKexAlgorithms=+diffie-hellman-group-exchange-sha1 sbc3662@om
 
 # Color theme
 set -g theme_color_scheme dracula
+set -x DESKTOP 192.168.1.107
 
 fish_add_path $HOME/apps/kotlin/bin
+fish_add_path -g $HOME/.local/bin
