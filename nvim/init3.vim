@@ -22,6 +22,7 @@ set foldmethod=syntax       " Fold based on syntax
 set nofoldenable
 set foldlevel=99
 let mapleader = " "         " Use space as leader
+let maplocalleader=" "
 set encoding=utf-8
 set fileencoding=utf-8
 set noswapfile
@@ -90,6 +91,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'tikhomirov/vim-glsl'
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+    Plug 'lervag/vimtex'
 
 "{{ Other }}
     " Plug 'kana/vim-submode'
@@ -97,6 +99,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 call plug#end()
 
+let g:vimtex_view_method = 'zathura'
 let g:transparent_enabled = v:true
 
 " Set vim commentary to use // for c and c++ file types
@@ -105,12 +108,6 @@ aug commentary
     au FileType c,cpp,s setlocal commentstring=//%s
     au FileType vert,frag,tesc,tese,geom,comp,glsl,vs,fs setlocal commentstring=//%s
 aug END
-
-" let g:gruvbox_contrast_dark='hard'
-" let g:italicize_strings=1
-" let g:gruvbox_italic=1
-" let g:gruvbox_improved_strings=1
-" let g:gruvbox_improved_warnings=1
 
 let g:vimwiki_global_ext = 0
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
@@ -180,8 +177,9 @@ autocmd VimEnter * silent AirlineToggleWhitespace
 
 
 " Make tabs persist
-imap <Return> <Return><Space><BS>
-inoremap {<CR> {<CR>}<Esc>O<Space><BS>
+" imap <Return> <Return><Space><BS>
+imap {<CR> {<CR>}<Esc>O<Space><BS>
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR><Space><BS>"
 nmap o o<Space><BS>
 nmap O O<Space><BS>
 

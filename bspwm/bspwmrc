@@ -10,6 +10,7 @@ bash "$HOME"/.config/bspwm/autostart.sh &
 
 # VLC fullscreen controls fix
 bspc rule --add vlc:vlc border=off layer=above
+bspc rule -a Zathura state=tiled
 
 bspc config border_width	2
 bspc config window_gap		0
