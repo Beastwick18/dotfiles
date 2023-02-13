@@ -42,12 +42,41 @@ vim.g.vim_markdown_math = 1
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.rainbow_active = 1
 
+-- vim.g.UltiSnipsSnippetsDirectories = "~/.config/nvim/ultisnips"
+vim.g.vimwiki_global_ext = 0
+-- vim.cmd"let g:vimwiki_ext2syntax = {['.md'] = 'markdown', ['.markdown'] = 'markdown', ['.mdown'] = 'markdown'}"
+vim.g.vimwiki_list = {
+        {
+          path = '~/',
+          syntax = 'markdown',
+          ext  = '.md',
+        }
+      }
+vim.g.vimwiki_ext2syntax = {
+    ['.md'] = 'markdown',
+    ['.markdown'] = 'markdown',
+    ['.mdown'] = 'markdown',
+}
+vim.g.vimwiki_root = '~/VimWiki'
+vim.g.vimwiki_listsyms = '✗○◐●✓'
+-- vim.cmd"let g:vimwiki_list = [{'path': '~/VimWiki', 'syntax': 'markdown', 'ext': '.md'}]"
+-- vim.api.nvim_do_autocmd('FileType', {
+--     pattern = 'vimwiki',
+--     command = 'set ft=markdown'
+-- })
+vim.cmd[[autocmd FileType vimwiki set ft=markdown]]
+
 vim.cmd[[colorscheme catppuccin-mocha]]
 
 local nore = { noremap = true }
 local silent = { silent = true }
 local snore = { noremap = true, silent = true }
 
+vim.cmd[[nmap o A<CR><Space><BS>]]
+vim.cmd[[nmap O I<CR><up><Space><BS>]]
+
+k.set('i', '<cr>', '<cr><Space><BS>')
+k.set('', '<F1>', '')
 k.set('', 'K', '{')
 k.set('', 'J', '}')
 k.set('', ';w', ':w<CR>', nore)
@@ -80,15 +109,14 @@ k.set('v', '<S-Tab>', '<')
 
 k.set('i', '<M-k>', '<right><ESC>:m -2<cr>i', nore)
 k.set('i', '<M-j>', '<right><ESC>:m +1<cr>i', nore)
+k.set('i', '<S-Tab>', '<esc><<3hi')
 
 -- CHAD bindings
 k.set('n', '<C-\\>', '<cmd>CHADopen<CR>', nore)
 k.set('i', '<C-\\>', '<cmd>CHADopen<CR>', nore)
 
 -- Persistent tabs
-k.set('n', 'o', 'o<Space><BS>')
-k.set('n', 'O', 'O<Space><BS>')
-k.set('i', '{<CR>', '{<CR>}<Esc>O<Space><BS>')
+k.set('i', '{<CR>', '{<CR>}<Esc>O<Space><BS>', nore)
 
 -- Fugitive bindings
 k.set('n', '<leader>gd', ':Gdiffsplit<cr>', snore)
@@ -102,6 +130,9 @@ k.set('n', '<C-k>', '<Plug>(VM-Add-Cursor-Up)', snore)
 -- Insert mode mappings
 k.set('i', '<C-k>', '<Up>')
 k.set('i', '<C-j>', '<Down>')
+k.set('i', '<C-k>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<Up>"]], {expr=true, noremap=true})
+k.set('i', '<C-j>', [[coc#pum#visible() ? coc#pum#next(1) : "\<Down>"]], {expr=true, noremap=true})
+-- inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#next(1) : "\<S-Tab>"
 k.set('i', '<C-h>', '<Left>')
 k.set('i', '<C-l>', '<Right>')
 
@@ -113,8 +144,21 @@ k.set('n', 'gd', '<Plug>(coc-definition)', silent)
 k.set('n', '<leader>jy', '<Plug>(coc-type-definition)', silent)
 k.set('n', '<leader>ji', '<Plug>(coc-implementation)', silent)
 k.set('n', '<leader>jr', '<Plug>(coc-references)', silent)
-k.set('i', '<cr>', 'pumvisible() ? coc#_select_confirm() : "<C-g>u<CR><Space><BS>"', snore)
+k.set('n', '<leader>s', ':CocCommand snippets.editSnippets<cr>', silent)
+-- k.set('i', '<tab>', [[pumvisible() ? coc#_select_confirm() : "<C-g>u<tab>"]], {silent = true, expr = true, noremap=true})
+k.set('i', '<tab>', [=[coc#pum#visible() ? coc#_select_confirm() : coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" : CheckBackspace() ? '<TAB>' : coc#refresh()]=], {silent=true, expr=true, noremap=true})
 
+vim.cmd[=[function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction]=]
+
+-- let g:coc_snippet_next = '<tab>'
+-- inoremap <silent><expr> <Tab>
+--       \ coc#pum#visible() ? coc#pum#next(1) :
+--       \ CheckBackspace() ? "\<Tab>" :
+--       \ coc#refresh()
+    
 vim.cmd[[packadd packer.nvim]]
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
@@ -149,6 +193,10 @@ require('packer').startup(function(use)
     -- LSP
     use { 'neoclide/coc.nvim', branch = 'release' }
     use { 'lervag/vimtex' }
+    -- use { 'sirver/ultisnips' }
+    
+    -- Other
+    use {'vimwiki/vimwiki', branch = 'dev' }
 end)
 
 -- Autocmd
@@ -158,6 +206,10 @@ vim.api.nvim_create_autocmd('FileType', {
     group = commentary,
     command='setlocal commentstring=//%s'
 })
+
+-- Test
+-- k.set('n', 'o', 'o<Space><BS>', nore)
+-- k.set('n', 'O', 'O<Space><BS>', nore)
 
 -- CHADTree group
 local chad = vim.api.nvim_create_augroup('chad', { clear = true })
@@ -178,7 +230,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'CHADTree',
     group = chad,
-    command='nmap <silent> <buffer> B :cd ..<cr>'
+    -- command='nmap <silent> <buffer> B :cd ..<cr>'
+    callback = function()
+        k.set('n', 'B', ':cd ..<cr>', { silent = true, buffer = true })
+        k.set('', 'J', '5g<down>', { silent = true, buffer = true })
+        k.set('', 'K', '5g<up>', { silent = true, buffer = true })
+    end
 })
 
 -- Close chadtree if it is the last window open
