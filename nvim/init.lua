@@ -3,6 +3,21 @@ local wo = vim.wo
 local bo = vim.bo
 local k = vim.keymap
 
+
+vim.cmd[[
+if has('win32') || (has('unix') && exists('$WSLENV'))
+  if executable('/mnt/c/Users/Brad/sioyek/sioyek.exe')
+    let g:vimtex_view_method = 'sioyek'
+    let g:vimtex_view_sioyek_exe = '/mnt/c/Users/Brad/sioyek/sioyek.exe'
+    let g:vimtex_callback_progpath = 'wsl nvim'
+  elseif executable('mupdf.exe')
+    let g:vimtex_view_general_viewer = 'mupdf.exe'
+  elseif executable('SumatraPDF.exe')
+    let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
+  endif
+endif
+]]
+
 o.path = o.path .. '**'
 o.mouse = 'a'
 o.encoding = 'utf-8'
@@ -36,7 +51,7 @@ o.foldenable = false
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.g.vimtex_view_method = 'zathura'
+-- vim.g.vimtex_view_method = 'zathura'
 vim.g.transparent_enabled = true
 vim.g.vim_markdown_math = 1
 vim.g.vim_markdown_folding_disabled = 1
@@ -128,11 +143,13 @@ k.set('n', '<C-j>', '<Plug>(VM-Add-Cursor-Down)', snore)
 k.set('n', '<C-k>', '<Plug>(VM-Add-Cursor-Up)', snore)
 
 -- Insert mode mappings
-k.set('i', '<C-k>', '<Up>')
-k.set('i', '<C-j>', '<Down>')
-k.set('i', '<C-k>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<Up>"]], {expr=true, noremap=true})
-k.set('i', '<C-j>', [[coc#pum#visible() ? coc#pum#next(1) : "\<Down>"]], {expr=true, noremap=true})
+-- k.set('i', '<C-k>', '<Up>')
+-- k.set('i', '<C-j>', '<Down>')
+-- k.set('i', '<C-k>', "coc#pum#visible() ? coc#pum#prev(1) : <ESC><Up>a", {expr=true, noremap=true})
+-- k.set('i', '<C-j>', [[coc#pum#visible() ? coc#pum#next(1) : <ESC><Down>a]], {expr=true, noremap=true})
 -- inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#next(1) : "\<S-Tab>"
+vim.cmd[[inoremap <expr> <C-k> coc#pum#visible() ? coc#pum#next(1) : "\<Up>"]]
+vim.cmd[[inoremap <expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<Down>"]]
 k.set('i', '<C-h>', '<Left>')
 k.set('i', '<C-l>', '<Right>')
 
@@ -161,6 +178,8 @@ endfunction]=]
     
 vim.cmd[[packadd packer.nvim]]
 require('packer').startup(function(use)
+    
+
     use 'wbthomason/packer.nvim'
     use 'nvim-lualine/lualine.nvim'
     use { 'catppuccin/nvim', as = 'catppuccin' }
