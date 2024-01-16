@@ -1,10 +1,10 @@
 return {
-	{
-		"jbyuki/venn.nvim",
-	},
-	{
-		"jbyuki/ntangle.nvim",
-	},
+	-- {
+	-- 	"jbyuki/venn.nvim",
+	-- },
+	-- {
+	-- 	"jbyuki/ntangle.nvim",
+	-- },
 	{
 		"Beastwick18/nabla.nvim",
 		branch = "tilde",
