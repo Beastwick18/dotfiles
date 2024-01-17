@@ -1,7 +1,6 @@
 #!/bin/python3
 
 import json
-import os
 from pathlib import Path
 
 def create_link(name):
