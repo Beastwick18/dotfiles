@@ -1,8 +1,0 @@
-{
-    "clangd.semanticHighlighting": true,
-    "coc.preferences.semanticTokensHighlights": false,
-    "snippets.ultisnips.pythonPrompt": false,
-    "coc.source.snippets.priority": 0,
-    "coc.source.around.enable": false
-}
-

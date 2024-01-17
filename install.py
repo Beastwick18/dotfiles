@@ -23,10 +23,17 @@ def create_link(name):
         return
 
     if dst.exists():
-        new_path = dst.replace(dst.with_name(src.name + ".bak"))
+        try:
+            new_path = dst.replace(dst.with_name(src.name + ".bak"))
+        except:
+            print(f"{name}: Path exists, but unable to create backup")
+            return
         print(f"Created backup for {name} located at {new_path}")
 
-    os.symlink(src, dst, target_is_directory=src.is_dir())
+    try:
+        dst.symlink_to(src, target_is_directory=src.is_dir())
+    except:
+        print(f"{name}: Unable to create symlink")
 
 def load_map(filename):
     with open(filename) as file:
