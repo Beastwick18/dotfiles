@@ -119,7 +119,10 @@ plugins=(git)
 [[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 fpath=($HOME/repos/zsh-completions/src $fpath)
-autoload -U compinit && compinit -u
+
+ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
+[[ -d $ZSH_COMPDUMP ]] || mkdir -p $ZSH_COMPDUMP
+autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION"
 
 ##
 
@@ -130,7 +133,7 @@ export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION"
 
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
