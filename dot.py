@@ -15,7 +15,7 @@ def print_help():
 
 def install():
     global cfg
-    cfg = load_map("map.json")
+    cfg = load_map("dotfiles.json")
     for k in cfg:
         create_link(k)
 
@@ -35,13 +35,12 @@ def main(arg):
         link = exe.readlink().parent.absolute()
         os.chdir(link)
 
-    if len(arg) < 2 or arg[1] == "help" or arg[1] == "--help":
-        print_help()
-        return
-    if arg[1] == "install":
-        install()
-    elif arg[1] == "sync":
+    if len(arg) < 2 or arg[1] == "sync":
         sync()
+    elif arg[1] == "help" or arg[1] == "--help":
+        print_help()
+    elif arg[1] == "install":
+        install()
 
 def create_link(name):
     if name not in cfg:
