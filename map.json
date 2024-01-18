@@ -3,5 +3,6 @@
   "git": "~/.config/git",
   "zsh": "~/.config/zsh",
   "zshenv": "/etc/zsh/zshenv",
-  "npm": "~/.config/npm"
+  "npm": "~/.config/npm",
+  "dot.py": "~/.local/bin/dot"
 }
