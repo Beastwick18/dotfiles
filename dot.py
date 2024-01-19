@@ -37,21 +37,22 @@ def main(arg):
 
     if len(arg) < 2 or arg[1] == "sync":
         sync()
-    elif arg[1] == "help" or arg[1] == "--help":
-        print_help()
     elif arg[1] == "install":
         install()
+    else:
+        print_help()
 
 def create_link(name):
     if name not in cfg:
         print(f"{name}: Unknown name")
         return
 
-    src = Path(name).expanduser().absolute()
     dst = Path(cfg[name]).expanduser().absolute()
     if dst.is_symlink():
         print(f"{name}: Link already exists")
         return
+
+    src = Path(name).expanduser().absolute()
     if not src.exists():
         print(f"{name}: Does not exist")
         return
