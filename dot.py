@@ -13,32 +13,51 @@ def print_help():
     print("  install: Install dotfiles by creating symlinks")
     print("  sync: Sync dotfiles with remote")
 
-def install():
+def install(exe, cwd):
+    os.chdir(exe)
     global cfg
     cfg = load_map("dotfiles.json")
     for k in cfg:
         create_link(k)
+    os.chdir(cwd)
 
-def sync():
+def sync(exe, cwd):
+    os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
     subprocess.run(["git", "pull", "--rebase"])
     subprocess.run(["git", "add", "--all"])
     subprocess.run(["git", "commit", "-m", date])
     subprocess.run(["git", "push"])
+    os.chdir(cwd)
+
+def add(arg, exe, cwd):
+    if len(arg) < 2:
+        print("Usage: dot add <path>")
+        return
+    orig = Path(arg[1]).expanduser().absolute()
+    dotfile = exe.joinpath(orig.name)
+    print(orig)
+    print(dotfile)
+    print(f"mv {orig} -> {dotfile}")
+
 
 def main(arg):
     # Navigate to target of dot.py symlink
     # All dotfiles are located here
+    cwd = Path.cwd().expanduser().absolute()
     exe = Path(arg[0]).expanduser().absolute()
     if exe.is_symlink():
-        link = exe.readlink().parent.absolute()
-        os.chdir(link)
+        exe = exe.readlink().parent.absolute()
+    else:
+        exe = exe.parent.absolute()
 
     if len(arg) < 2 or arg[1] == "sync":
-        sync()
+        sync(exe, cwd)
     elif arg[1] == "install":
-        install()
+        install(exe, cwd)
+    elif arg[1] == "add":
+        add(arg[1:], exe, cwd)
     else:
         print_help()
 

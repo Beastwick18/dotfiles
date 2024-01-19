@@ -137,8 +137,8 @@ compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION"
 
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
 
 gq() {
     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
