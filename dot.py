@@ -26,7 +26,7 @@ def sync(exe, cwd):
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    subprocess.run(["git", "pull", "--rebase"])
+    subprocess.run(["git", "pull"])
     subprocess.run(["git", "add", "--all"])
     subprocess.run(["git", "commit", "-m", date])
     subprocess.run(["git", "push"])
