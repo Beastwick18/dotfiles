@@ -12,8 +12,12 @@ MAP_FILE = "dotfiles.json"
 def print_help():
     print("Usage: dot <action>")
     print("Actions:")
+    print("  list (default): List all mapped dotfiles")
     print("  install: Install dotfiles by creating symlinks")
     print("  sync: Sync dotfiles with remote")
+    print("  pull: Pull any changes from remote")
+    print("  push: Push any local changes to remote")
+    print("  add: Add a local file/dir to the dotfile repo")
 
 def install(exe, cwd):
     os.chdir(exe)
@@ -32,6 +36,20 @@ def sync(exe, cwd):
     subprocess.run(["git", "push"])
     os.chdir(cwd)
     return 0
+
+def pull(exe, cwd):
+    os.chdir(exe)
+    subprocess.run(["git", "pull"])
+    os.chdir(cwd)
+
+def push(exe, cwd):
+    os.chdir(exe)
+    date = time.strftime("%m-%d-%y %H:%M:%S")
+    print(date)
+    subprocess.run(["git", "add", "--all"])
+    subprocess.run(["git", "commit", "-m", date])
+    subprocess.run(["git", "push"])
+    os.chdir(cwd)
 
 def add(arg, exe, cwd):
     if len(arg) < 2:
@@ -94,6 +112,10 @@ def main(arg):
         exit(add(arg[1:], exe, cwd))
     elif arg[1] == "sync":
         exit(sync(exe, cwd))
+    elif arg[1] == "pull":
+        exit(pull(exe, cwd))
+    elif arg[1] == "push":
+        exit(push(exe, cwd))
     else:
         print_help()
 
