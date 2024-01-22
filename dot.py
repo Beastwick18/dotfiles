@@ -6,10 +6,12 @@ import sys
 import subprocess
 import time
 from pathlib import Path
+import dotlib
 
 MAP_FILE = "dotfiles.json"
 
-def print_help():
+@dotlib.cmd("help", default=True)
+def print_help(args):
     print("Usage: dot <action>")
     print("Actions:")
     print("  list (default): List all mapped dotfiles")
@@ -20,14 +22,16 @@ def print_help():
     print("  add: Add a local file/dir to the dotfile repo")
     print("  diff: Show unsynced changes")
 
-def install():
+@dotlib.cmd("install")
+def install(args):
     os.chdir(exe)
     for k in cfg:
         create_link(k)
     os.chdir(cwd)
     return 0
 
-def sync():
+@dotlib.cmd("sync")
+def sync(args):
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -38,12 +42,14 @@ def sync():
     os.chdir(cwd)
     return 0
 
-def pull():
+@dotlib.cmd("pull")
+def pull(args):
     os.chdir(exe)
     subprocess.run(["git", "pull"])
     os.chdir(cwd)
 
-def push():
+@dotlib.cmd("pull")
+def push(args):
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -52,12 +58,13 @@ def push():
     subprocess.run(["git", "push"])
     os.chdir(cwd)
 
-def add(arg):
-    if len(arg) < 2:
+@dotlib.cmd("add")
+def add(args):
+    if len(args) < 2:
         print("Usage: dot add <path>")
         return 1
     home = Path.home().absolute()
-    orig = Path(arg[1]).expanduser().absolute()
+    orig = Path(args[1]).expanduser().absolute()
 
     # Replace /home/$USER with ~
     link_to = str(orig)
@@ -86,21 +93,24 @@ def add(arg):
     os.chdir(cwd)
     return 0
 
-def diff():
+@dotlib.cmd("diff")
+def diff(args):
     os.chdir(exe)
     subprocess.run(["git", "diff"])
     os.chdir(cwd)
 
-def list_map():
+
+@dotlib.cmd("list")
+def list_map(args):
     print(f"{MAP_FILE}:")
     for k, v in cfg.items():
         print(f"  {k} -> {v}")
     return 0
 
-def main(arg):
+def main(args):
     global cfg, exe, cwd
     cwd = Path.cwd().expanduser().absolute()
-    exe = Path(arg[0]).expanduser().absolute()
+    exe = Path(args[0]).expanduser().absolute()
     if exe.is_symlink():
         exe = exe.readlink().parent.absolute()
     else:
@@ -110,24 +120,25 @@ def main(arg):
     cfg = load_map(MAP_FILE)
     os.chdir(cwd)
 
-    sub_arg = arg[1:]
+    # sub_arg = args[1:]
+    dotlib.run(args)
 
-    if len(arg) < 2 or arg[1] == "list":
-        exit(list_map())
-    elif arg[1] == "install":
-        exit(install())
-    elif arg[1] == "add":
-        exit(add(sub_arg))
-    elif arg[1] == "sync":
-        exit(sync())
-    elif arg[1] == "pull":
-        exit(pull())
-    elif arg[1] == "push":
-        exit(push())
-    elif arg[1] == "diff":
-        exit(diff())
-    else:
-        print_help()
+    # if len(arg) < 2 or arg[1] == "list":
+    #     exit(list_map())
+    # elif arg[1] == "install":
+    #     exit(install())
+    # elif arg[1] == "add":
+    #     exit(add(sub_arg))
+    # elif arg[1] == "sync":
+    #     exit(sync())
+    # elif arg[1] == "pull":
+    #     exit(pull())
+    # elif arg[1] == "push":
+    #     exit(push())
+    # elif arg[1] == "diff":
+    #     exit(diff())
+    # else:
+    #     print_help()
 
 def create_link(name):
     if name not in cfg:
