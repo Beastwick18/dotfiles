@@ -5,5 +5,6 @@
   "zshenv": "/etc/zsh/zshenv",
   "npm": "~/.config/npm",
   "dot.py": "~/.local/bin/dot",
-  "nyaa": "~/.config/nyaa"
+  "nyaa": "~/.config/nyaa",
+  "gq": "~/.local/bin/gq"
 }

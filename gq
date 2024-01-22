@@ -1,0 +1,8 @@
+#!/bin/bash
+
+msg="$*"
+if [[ -z $msg ]]; then
+	msg=$(date +'%m-%d-%y %H:%M:%S')
+fi
+echo "commit msg: $msg"
+git add --all && git commit -m "$msg" && git push
