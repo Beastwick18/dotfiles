@@ -6,5 +6,5 @@
   "npm": "~/.config/npm",
   "dot.py": "~/.local/bin/dot",
   "nyaa": "~/.config/nyaa",
-  "gq": "~/.local/bin/gq"
+  "bin": "~/.local/bin/dot"
 }
