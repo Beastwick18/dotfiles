@@ -48,7 +48,7 @@ def pull(args):
     subprocess.run(["git", "pull"])
     os.chdir(cwd)
 
-@dotlib.cmd("pull")
+@dotlib.cmd("push")
 def push(args):
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
