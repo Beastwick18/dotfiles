@@ -2,9 +2,9 @@
   "nvim": "~/.config/nvim",
   "git": "~/.config/git",
   "zsh": "~/.config/zsh",
-  "zshenv": "/etc/zsh/zshenv",
+  "zsh/zshenv": "/etc/zsh/zshenv",
   "npm": "~/.config/npm",
   "dot.py": "~/.local/bin/dot",
   "nyaa": "~/.config/nyaa",
-  "bin": "~/.local/bin/dot"
+  "bin": "~/.local/bin/dotbin"
 }

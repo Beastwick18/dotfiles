@@ -126,7 +126,7 @@ autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d
 
 ##
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/startup.py"
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
