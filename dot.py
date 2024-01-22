@@ -18,15 +18,16 @@ def print_help():
     print("  pull: Pull any changes from remote")
     print("  push: Push any local changes to remote")
     print("  add: Add a local file/dir to the dotfile repo")
+    print("  diff: Show unsynced changes")
 
-def install(exe, cwd):
+def install():
     os.chdir(exe)
     for k in cfg:
         create_link(k)
     os.chdir(cwd)
     return 0
 
-def sync(exe, cwd):
+def sync():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -37,12 +38,12 @@ def sync(exe, cwd):
     os.chdir(cwd)
     return 0
 
-def pull(exe, cwd):
+def pull():
     os.chdir(exe)
     subprocess.run(["git", "pull"])
     os.chdir(cwd)
 
-def push(exe, cwd):
+def push():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -51,7 +52,7 @@ def push(exe, cwd):
     subprocess.run(["git", "push"])
     os.chdir(cwd)
 
-def add(arg, exe, cwd):
+def add(arg):
     if len(arg) < 2:
         print("Usage: dot add <path>")
         return 1
@@ -85,6 +86,11 @@ def add(arg, exe, cwd):
     os.chdir(cwd)
     return 0
 
+def diff():
+    os.chdir(exe)
+    subprocess.run(["git", "diff"])
+    os.chdir(cwd)
+
 def list_map():
     print(f"{MAP_FILE}:")
     for k, v in cfg.items():
@@ -92,6 +98,7 @@ def list_map():
     return 0
 
 def main(arg):
+    global cfg, exe, cwd
     cwd = Path.cwd().expanduser().absolute()
     exe = Path(arg[0]).expanduser().absolute()
     if exe.is_symlink():
@@ -100,22 +107,25 @@ def main(arg):
         exe = exe.parent.absolute()
 
     os.chdir(exe)
-    global cfg
     cfg = load_map(MAP_FILE)
     os.chdir(cwd)
+
+    sub_arg = arg[1:]
 
     if len(arg) < 2 or arg[1] == "list":
         exit(list_map())
     elif arg[1] == "install":
-        exit(install(exe, cwd))
+        exit(install())
     elif arg[1] == "add":
-        exit(add(arg[1:], exe, cwd))
+        exit(add(sub_arg))
     elif arg[1] == "sync":
-        exit(sync(exe, cwd))
+        exit(sync())
     elif arg[1] == "pull":
-        exit(pull(exe, cwd))
+        exit(pull())
     elif arg[1] == "push":
-        exit(push(exe, cwd))
+        exit(push())
+    elif arg[1] == "diff":
+        exit(diff())
     else:
         print_help()
 
