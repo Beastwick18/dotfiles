@@ -140,9 +140,9 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 
-gq() {
-    git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
-}
+# gq() {
+#     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
+# }
 
 export EDITOR="/usr/bin/nvim"
 alias nvimc="$EDITOR $HOME/.config/nvim"
