@@ -16,7 +16,6 @@ def install():
     for k in cfg:
         dotlib.create_link(cfg, k)
     os.chdir(cwd)
-    return 0
 
 @dotlib.cmd(desc="Sync dotfiles with remote")
 def sync():
@@ -28,7 +27,6 @@ def sync():
     subprocess.run(["git", "commit", "-m", date])
     subprocess.run(["git", "push"])
     os.chdir(cwd)
-    return 0
 
 @dotlib.cmd(desc="Pull any changes from remote")
 def pull():
@@ -76,7 +74,6 @@ def add(path):
     os.chdir(exe)
     dotlib.write_map(cfg, MAP_FILE)
     os.chdir(cwd)
-    return 0
 
 @dotlib.cmd(desc="Show unsynced changes")
 def diff():
@@ -94,7 +91,6 @@ def list_map():
 
     for k, v in cfg.items():
         print(f"  {k:>{l}} -> {v}")
-    return 0
 
 def main(args):
     global cfg, exe, cwd
