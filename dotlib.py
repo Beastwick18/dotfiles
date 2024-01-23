@@ -69,7 +69,7 @@ def create_link(cfg: dict[str,str], name: str):
 
     if dst.exists():
         try:
-            new_path = dst.replace(dst.with_name(src.name + ".bak"))
+            new_path = dst.replace(dst.with_name(dst.name + ".bak"))
         except:
             print(f"{name}: Path exists, but unable to create backup")
             return
