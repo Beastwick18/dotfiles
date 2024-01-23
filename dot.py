@@ -8,6 +8,7 @@ from pathlib import Path
 import dotlib
 
 MAP_FILE = "dotfiles.json"
+APP_NAME = "dot"
 
 @dotlib.cmd(desc="Install dotfiles by creating symlinks")
 def install():
@@ -105,7 +106,7 @@ def main(args):
 
     cfg = dotlib.load_map(exe.joinpath(MAP_FILE))
 
-    dotlib.run("dot", args)
+    dotlib.run(APP_NAME, args)
 
 if __name__ == "__main__":
     main(sys.argv)

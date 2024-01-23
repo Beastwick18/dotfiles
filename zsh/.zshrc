@@ -151,3 +151,13 @@ alias sudoedit="sudo -E $EDITOR"
 alias ls="eza --icons=auto -a --git -1 --group-directories-first"
 alias wget="wget --hsts-file=\"$XDG_CACHE_HOME/wget-hsts\""
 alias g="lazygit"
+
+alias d="dot"
+alias dp="dot push"
+alias dl="dot pull"
+alias ds="dot sync"
+alias da="dot add"
+alias di="dot install"
+alias dd="dot diff"
+alias dt="dot list"
+
