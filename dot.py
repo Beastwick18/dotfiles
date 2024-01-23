@@ -10,28 +10,16 @@ import dotlib
 
 MAP_FILE = "dotfiles.json"
 
-@dotlib.cmd("help", default=True)
-def print_help(args):
-    print("Usage: dot <action>")
-    print("Actions:")
-    print("  list (default): List all mapped dotfiles")
-    print("  install: Install dotfiles by creating symlinks")
-    print("  sync: Sync dotfiles with remote")
-    print("  pull: Pull any changes from remote")
-    print("  push: Push any local changes to remote")
-    print("  add: Add a local file/dir to the dotfile repo")
-    print("  diff: Show unsynced changes")
-
-@dotlib.cmd("install")
-def install(args):
+@dotlib.cmd("install", desc="Install dotfiles by creating symlinks")
+def install():
     os.chdir(exe)
     for k in cfg:
         create_link(k)
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("sync")
-def sync(args):
+@dotlib.cmd("sync", desc="Sync dotfiles with remote")
+def sync():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -42,14 +30,14 @@ def sync(args):
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("pull")
-def pull(args):
+@dotlib.cmd("pull", desc="Pull any changes from remote")
+def pull():
     os.chdir(exe)
     subprocess.run(["git", "pull"])
     os.chdir(cwd)
 
-@dotlib.cmd("push")
-def push(args):
+@dotlib.cmd("push", desc="Push any local changes to remote")
+def push():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
@@ -58,13 +46,10 @@ def push(args):
     subprocess.run(["git", "push"])
     os.chdir(cwd)
 
-@dotlib.cmd("add")
-def add(args):
-    if len(args) < 2:
-        print("Usage: dot add <path>")
-        return 1
+@dotlib.cmd("add", desc="Add a local file/dir to the dotfile repo")
+def add(path):
     home = Path.home().absolute()
-    orig = Path(args[1]).expanduser().absolute()
+    orig = Path(path).expanduser().absolute()
 
     # Replace /home/$USER with ~
     link_to = str(orig)
@@ -93,15 +78,15 @@ def add(args):
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("diff")
-def diff(args):
+@dotlib.cmd("diff", desc="Show unsynced changes")
+def diff():
     os.chdir(exe)
     subprocess.run(["git", "diff"])
     os.chdir(cwd)
 
 
-@dotlib.cmd("list")
-def list_map(args):
+@dotlib.cmd("list", desc="List all mapped dotfiles")
+def list_map():
     print(f"{MAP_FILE}:")
     for k, v in cfg.items():
         print(f"  {k} -> {v}")
@@ -120,25 +105,7 @@ def main(args):
     cfg = load_map(MAP_FILE)
     os.chdir(cwd)
 
-    # sub_arg = args[1:]
-    dotlib.run(args)
-
-    # if len(arg) < 2 or arg[1] == "list":
-    #     exit(list_map())
-    # elif arg[1] == "install":
-    #     exit(install())
-    # elif arg[1] == "add":
-    #     exit(add(sub_arg))
-    # elif arg[1] == "sync":
-    #     exit(sync())
-    # elif arg[1] == "pull":
-    #     exit(pull())
-    # elif arg[1] == "push":
-    #     exit(push())
-    # elif arg[1] == "diff":
-    #     exit(diff())
-    # else:
-    #     print_help()
+    dotlib.run("dot", args)
 
 def create_link(name):
     if name not in cfg:
