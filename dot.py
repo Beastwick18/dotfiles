@@ -1,6 +1,5 @@
 #!/bin/python3
 
-import json
 import os
 import sys
 import subprocess
@@ -10,15 +9,15 @@ import dotlib
 
 MAP_FILE = "dotfiles.json"
 
-@dotlib.cmd("install", desc="Install dotfiles by creating symlinks")
+@dotlib.cmd(desc="Install dotfiles by creating symlinks")
 def install():
     os.chdir(exe)
     for k in cfg:
-        create_link(k)
+        dotlib.create_link(cfg, k)
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("sync", desc="Sync dotfiles with remote")
+@dotlib.cmd(desc="Sync dotfiles with remote")
 def sync():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
@@ -30,13 +29,13 @@ def sync():
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("pull", desc="Pull any changes from remote")
+@dotlib.cmd(desc="Pull any changes from remote")
 def pull():
     os.chdir(exe)
     subprocess.run(["git", "pull"])
     os.chdir(cwd)
 
-@dotlib.cmd("push", desc="Push any local changes to remote")
+@dotlib.cmd(desc="Push any local changes to remote")
 def push():
     os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
@@ -46,7 +45,7 @@ def push():
     subprocess.run(["git", "push"])
     os.chdir(cwd)
 
-@dotlib.cmd("add", desc="Add a local file/dir to the dotfile repo")
+@dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
 def add(path):
     home = Path.home().absolute()
     orig = Path(path).expanduser().absolute()
@@ -74,22 +73,26 @@ def add(path):
     cfg[dotfile.name] = link_to
     print(f"map {dotfile.name} -> {link_to}")
     os.chdir(exe)
-    write_map(MAP_FILE)
+    dotlib.write_map(cfg, MAP_FILE)
     os.chdir(cwd)
     return 0
 
-@dotlib.cmd("diff", desc="Show unsynced changes")
+@dotlib.cmd(desc="Show unsynced changes")
 def diff():
     os.chdir(exe)
     subprocess.run(["git", "diff"])
     os.chdir(cwd)
 
 
-@dotlib.cmd("list", desc="List all mapped dotfiles")
+@dotlib.cmd(name="list", desc="List all mapped dotfiles")
 def list_map():
     print(f"{MAP_FILE}:")
+    l = 0
+    for k in cfg.keys():
+        l = max(l, len(k))
+
     for k, v in cfg.items():
-        print(f"  {k} -> {v}")
+        print(f"  {k:>{l}} -> {v}")
     return 0
 
 def main(args):
@@ -97,56 +100,12 @@ def main(args):
     cwd = Path.cwd().expanduser().absolute()
     exe = Path(args[0]).expanduser().absolute()
     if exe.is_symlink():
-        exe = exe.readlink().parent.absolute()
-    else:
-        exe = exe.parent.absolute()
+        exe = exe.readlink()
+    exe = exe.parent.absolute()
 
-    os.chdir(exe)
-    cfg = load_map(MAP_FILE)
-    os.chdir(cwd)
+    cfg = dotlib.load_map(exe.joinpath(MAP_FILE))
 
     dotlib.run("dot", args)
-
-def create_link(name):
-    if name not in cfg:
-        print(f"{name}: Unknown name")
-        return
-
-    dst = Path(cfg[name]).expanduser().absolute()
-    if dst.is_symlink():
-        print(f"{name}: Link already exists")
-        return
-
-    src = Path(name).expanduser().absolute()
-    if not src.exists():
-        print(f"{name}: Does not exist")
-        return
-
-    ans = input(f"Link {name} -> {cfg[name]} [y/N] ")
-    if ans.lower().strip() != "y":
-        return
-
-    if dst.exists():
-        try:
-            new_path = dst.replace(dst.with_name(src.name + ".bak"))
-        except:
-            print(f"{name}: Path exists, but unable to create backup")
-            return
-        print(f"Created backup for {name} located at {new_path}")
-
-    try:
-        dst.symlink_to(src, target_is_directory=src.is_dir())
-    except:
-        print(f"{name}: Unable to create symlink")
-
-def load_map(filename):
-    with open(filename) as file:
-        return json.load(file)
-
-def write_map(filename):
-    with open(filename, "w") as file:
-        json.dump(cfg, file, ensure_ascii=False, indent=2)
-
 
 if __name__ == "__main__":
     main(sys.argv)

@@ -1,39 +1,95 @@
 from inspect import signature
+import json
+from typing import Callable
+from pathlib import Path
 
 cmds = {}
 default_cmd = None
 
 class Entry:
-    def __init__(self, name, desc, func) -> None:
+    def __init__(self, name: str, desc: str, func: Callable):
         self.name = name
+        sig = signature(func)
+        fargs = sig.parameters.keys()
+        self.fullname = " ".join([name] + [f'<{k}>' for k in fargs])
         self.desc = desc
         self.func = func
 
-def help(app_name):
+def help(app_name: str):
     print(f"Usage: {app_name} <action>\nActions:")
-    for name, e in cmds.items():
-        sig = signature(e.func)
-        fargs = sig.parameters.keys()
-        full = " ".join([name] + [f'<{k}>' for k in fargs])
-        print(f"  {full:15} {e.desc}")
+    l = 0
+    for v in cmds.values():
+        l = max(len(v.fullname), l)
+    for e in cmds.values():
+        print(f"  {e.fullname:{l+2}} {e.desc}")
 
-def cmd(name, desc=""):
-    def create_entry(func):
+def cmd(name: str | None = None, desc: str = ""):
+    def create_entry(func: Callable):
         global cmds, default_cmd
+        nonlocal name
+        if name is None:
+            name = str(func.__name__)
         cmds[name] = Entry(name, desc, func)
     return create_entry
 
-def run(app_name, args):
+def load_map(filename: str | Path) -> dict[str,str]:
+    with open(filename) as file:
+        return json.load(file)
+
+def write_map(cfg: dict[str,str], filename: str):
+    with open(filename, "w") as file:
+        json.dump(cfg, file, ensure_ascii=False, indent=2)
+
+def create_link(cfg: dict[str,str], name: str):
+    if name not in cfg:
+        print(f"{name}: Unknown name")
+        return
+
+    src = Path(name).expanduser().absolute()
+    if not src.exists():
+        print(f"{name}: Does not exist")
+        return
+
+    dst = Path(cfg[name]).expanduser().absolute()
+    if dst.is_symlink():
+        if dst.readlink().exists():
+            if dst.readlink().expanduser().absolute() == src:
+                print(f"{name}: Already linked")
+                return
+            ans = input(f"{name}: Another link already exists, would you like to overwrite it? [y/N] ")
+            if ans.lower().strip() != "y":
+                return
+        # Otherwise, this link must be broken. Delete it
+        dst.unlink()
+
+
+    ans = input(f"Link {name} -> {cfg[name]} [y/N] ")
+    if ans.lower().strip() != "y":
+        return
+
+    if dst.exists():
+        try:
+            new_path = dst.replace(dst.with_name(src.name + ".bak"))
+        except:
+            print(f"{name}: Path exists, but unable to create backup")
+            return
+        print(f"Created backup for {name} located at {new_path}")
+
+    try:
+        dst.symlink_to(src, target_is_directory=src.is_dir())
+    except:
+        print(f"{name}: Unable to create symlink")
+
+def run(app_name: str, args: list[str]):
     if len(args) < 2:
         help(app_name)
         return
-    for name, e in cmds.items():
-        if args[1] == name:
-            sig = signature(e.func)
-            fargs = sig.parameters.keys()
-            if len(fargs) != len(args) - 2:
-                print(f"Expected: {app_name} " + " ".join([name] + [f'<{k}>' for k in fargs]))
-                exit(1)
-            e.func(*args[2:])
-            return
+    if args[1] in cmds:
+        e = cmds[args[1]]
+        sig = signature(e.func)
+        fargs = sig.parameters.keys()
+        if len(fargs) != len(args) - 2:
+            print(f"Expected: {app_name} " + e.fullname)
+            exit(1)
+        exit(e.func(*args[2:]))
     help(app_name)
