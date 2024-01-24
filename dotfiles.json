@@ -6,5 +6,6 @@
   "npm": "~/.config/npm",
   "dot.py": "~/.local/bin/dot",
   "nyaa": "~/.config/nyaa",
-  "bin": "~/.local/bin/dotbin"
+  "bin": "~/.local/bin/dotbin",
+  "python": "~/.config/python"
 }
