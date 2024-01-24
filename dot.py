@@ -20,33 +20,27 @@ def install():
 
 @dotlib.cmd(desc="Sync dotfiles with remote")
 def sync():
-    os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    subprocess.run(["git", "pull"])
-    subprocess.run(["git", "add", "--all"])
-    subprocess.run(["git", "commit", "-m", date])
-    subprocess.run(["git", "push"])
-    os.chdir(cwd)
+    subprocess.run(["git", "pull"], cwd=exe)
+    subprocess.run(["git", "add", "--all"], cwd=exe)
+    subprocess.run(["git", "commit", "-m", date], cwd=exe)
+    subprocess.run(["git", "push"], cwd=exe)
 
 @dotlib.cmd(desc="Pull any changes from remote")
 def pull():
-    os.chdir(exe)
-    subprocess.run(["git", "pull"])
-    os.chdir(cwd)
+    subprocess.run(["git", "pull"], cwd=exe)
 
 @dotlib.cmd(desc="Push any local changes to remote")
 def push():
-    os.chdir(exe)
     date = time.strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    subprocess.run(["git", "add", "--all"])
-    subprocess.run(["git", "commit", "-m", date])
-    subprocess.run(["git", "push"])
-    os.chdir(cwd)
+    subprocess.run(["git", "add", "--all"], cwd=exe)
+    subprocess.run(["git", "commit", "-m", date], cwd=exe)
+    subprocess.run(["git", "push"], cwd=exe)
 
 @dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
-def add(path, map_to: Optional[str]):
+def add(path: str, map_to: Optional[str]):
     home = Path.home().absolute()
     orig = Path(path).expanduser().absolute()
     if not map_to:
@@ -77,15 +71,11 @@ def add(path, map_to: Optional[str]):
     orig.symlink_to(dotfile, target_is_directory=is_dir)
     cfg[dotfile.name] = link_to
     print(f"map {dotfile.name} -> {link_to}")
-    os.chdir(exe)
-    dotlib.write_map(cfg, MAP_FILE)
-    os.chdir(cwd)
+    dotlib.write_map(cfg, exe.joinpath(MAP_FILE))
 
 @dotlib.cmd(desc="Show unsynced changes")
 def diff():
-    os.chdir(exe)
-    subprocess.run(["git", "diff"])
-    os.chdir(cwd)
+    subprocess.run(["git", "diff"], cwd=exe)
 
 
 @dotlib.cmd(name="list", desc="List all mapped dotfiles")
@@ -108,7 +98,7 @@ def main(args):
 
     cfg = dotlib.load_map(exe.joinpath(MAP_FILE))
 
-    dotlib.run(APP_NAME, args)
+    dotlib.run(APP_NAME, args, help_cmd="help")
 
 if __name__ == "__main__":
     main(sys.argv)
