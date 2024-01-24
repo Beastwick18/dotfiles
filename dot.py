@@ -5,6 +5,7 @@ import sys
 import subprocess
 import time
 from pathlib import Path
+from typing import Optional
 import dotlib
 
 MAP_FILE = "dotfiles.json"
@@ -45,9 +46,14 @@ def push():
     os.chdir(cwd)
 
 @dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
-def add(path):
+def add(path, map_to: Optional[str]):
     home = Path.home().absolute()
     orig = Path(path).expanduser().absolute()
+    if not map_to:
+        dotfile = exe.joinpath(orig.name)
+    else:
+        dotfile = exe.joinpath(map_to)
+    print(f"Map {orig} to {dotfile}")
 
     # Replace /home/$USER with ~
     link_to = str(orig)

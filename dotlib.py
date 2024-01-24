@@ -1,19 +1,35 @@
-from inspect import signature
+from inspect import Parameter, signature
+import inspect
 import json
-from typing import Callable
+from typing import Callable, Union
+import typing
 from pathlib import Path
 
-cmds = {}
-default_cmd = None
+def is_optional_explicit(param: Parameter):
+    field = param.annotation
+    return typing.get_origin(field) is Union and \
+           type(None) in typing.get_args(field)
+
+def is_required(param: Parameter):
+    return param.default is inspect._empty and not is_optional_explicit(param)
 
 class Entry:
     def __init__(self, name: str, desc: str, func: Callable):
         self.name = name
         sig = signature(func)
-        fargs = sig.parameters.keys()
-        self.fullname = " ".join([name] + [f'<{k}>' for k in fargs])
+        # fargs = sig.parameters.keys()
+        self.fullname = f"{name}"
+        for p in sig.parameters:
+            param = sig.parameters[p]
+            if is_required(param):
+                self.fullname += f" <{param.name}>"
+            else:
+                self.fullname += f" [{param.name}]"
+        # self.fullname = " ".join([name] + [f'<{k}>' for k in fargs])
         self.desc = desc
         self.func = func
+
+cmds = dict[str,Entry]()
 
 def help(app_name: str):
     print(f"Usage: {app_name} <action>\nActions:")
@@ -25,7 +41,7 @@ def help(app_name: str):
 
 def cmd(name: str | None = None, desc: str = ""):
     def create_entry(func: Callable):
-        global cmds, default_cmd
+        global cmds
         nonlocal name
         if name is None:
             name = str(func.__name__)
@@ -79,15 +95,26 @@ def create_link(cfg: dict[str,str], name: str):
         print(f"{name}: Unable to create symlink")
 
 def ask(q: str, default_yes=False):
-    yes_no = "y/N"
-    if default_yes:
-        yes_no = "Y/n"
+    yes_no = "Y/n" if default_yes else "y/N"
     result = input(f"{q} [{yes_no}] ").lower().strip()
-    if result == "y":
-        return True
     if result == "n":
         return False
-    return default_yes
+    return result == "y" or default_yes
+
+
+def get_kwargs(func, args):
+    sig = signature(func)
+    required = 0
+    max = len(sig.parameters.keys())
+    required = sum(1 for p in sig.parameters if is_required(sig.parameters[p]))
+    given = len(args)
+    args_given = args + [None] * (len(sig.parameters.keys()) - given)
+    kwargs = dict()
+    for p, g in zip(sig.parameters, args_given):
+        if g is None and not is_optional_explicit(sig.parameters[p]):
+            continue
+        kwargs[p] = g
+    return kwargs, required, max
 
 def run(app_name: str, args: list[str]):
     if len(args) < 2:
@@ -95,10 +122,12 @@ def run(app_name: str, args: list[str]):
         return
     if args[1] in cmds:
         e = cmds[args[1]]
-        sig = signature(e.func)
-        fargs = sig.parameters.keys()
-        if len(fargs) != len(args) - 2:
+        kwargs, required, max = get_kwargs(e.func, args[2:])
+        given = len(args[2:])
+        if given < required or given > max:
             print(f"Expected: {app_name} " + e.fullname)
             exit(1)
-        exit(e.func(*args[2:]))
+
+        exit(e.func(**kwargs))
+    print(f"Unknown command: {args[1]}")
     help(app_name)
