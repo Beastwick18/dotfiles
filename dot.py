@@ -73,6 +73,32 @@ def add(path: str, map_to: Optional[str]):
     print(f"map {dotfile.name} -> {link_to}")
     dotlib.write_map(cfg, exe.joinpath(MAP_FILE))
 
+@dotlib.cmd(desc="Unadd a dotfile by returning the file to its original location outside of the repo")
+def unadd(name: str):
+    if name not in cfg:
+        print(f'"{name}" does not exist in repo')
+        return 1
+    local = Path(cfg[name]).expanduser().absolute()
+    repo = exe.joinpath(name).expanduser().absolute()
+    if not local.exists() or not local.is_symlink():
+        print(f'No symlink exists at "{local}"')
+        return 1
+    if not repo.exists():
+        print(f'File does not exist in repo: "{repo}"')
+        return 1
+    if local.readlink() != repo:
+        print(f'The repo file ({repo}) does not link to the local file ({local})')
+        return 1
+
+    if not dotlib.ask(f'Unadd "{name}" ({local})?'):
+        return 0
+
+    local.unlink()
+    repo.rename(local)
+    del cfg[name]
+
+    dotlib.write_map(cfg, exe.joinpath(MAP_FILE))
+
 @dotlib.cmd(desc="Show unsynced changes")
 def diff():
     subprocess.run(["git", "diff"], cwd=exe)

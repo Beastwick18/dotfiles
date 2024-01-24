@@ -84,13 +84,13 @@ def create_link(cfg: dict[str,str], name: str, cwd: Path = Path()):
             if dst.readlink().expanduser().absolute() == src:
                 print(f'Error: "{name}" already linked')
                 return
-            if _ask(f"{name}: Another link already exists, would you like to overwrite it?"):
+            if ask(f"{name}: Another link already exists, would you like to overwrite it?"):
                 return
         # Otherwise, this link must be broken. Delete it
         dst.unlink()
 
 
-    if _ask(f"Link {name} -> {cfg[name]}"):
+    if ask(f"Link {name} -> {cfg[name]}"):
         return
 
     if dst.exists():
@@ -106,7 +106,7 @@ def create_link(cfg: dict[str,str], name: str, cwd: Path = Path()):
     except:
         print(f'Error: Unable to create symlink "{src}" for "{name}"')
 
-def _ask(q: str, default_yes: bool = False):
+def ask(q: str, default_yes: bool = False):
     yes_no = "Y/n" if default_yes else "y/N"
     result = input(f"{q} [{yes_no}] ").lower().strip()
     if result == "n":
