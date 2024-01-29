@@ -90,7 +90,7 @@ def create_link(cfg: dict[str,str], name: str, cwd: Path = Path()):
         dst.unlink()
 
 
-    if ask(f"Link {name} -> {cfg[name]}"):
+    if not ask(f"Link {name} -> {cfg[name]}"):
         return
 
     if dst.exists():
@@ -109,9 +109,7 @@ def create_link(cfg: dict[str,str], name: str, cwd: Path = Path()):
 def ask(q: str, default_yes: bool = False):
     yes_no = "Y/n" if default_yes else "y/N"
     result = input(f"{q} [{yes_no}] ").lower().strip()
-    if result == "n":
-        return False
-    return result == "y" or default_yes
+    return not result == "n" and (result == "y" or default_yes)
 
 def _union_cast(union: UnionType, val: Any):
     args = typing.get_args(union)
