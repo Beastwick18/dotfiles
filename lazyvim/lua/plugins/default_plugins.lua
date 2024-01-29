@@ -55,23 +55,24 @@ return {
 			keys[#keys + 1] = { "K", false }
 			keys[#keys + 1] = { "<c-k>", false, mode = "i" }
 		end,
-		opts = {
-			servers = {
-				tsserver = {
-					settings = {
-						typescript = {
-							preferGoToSourceDefinition = true,
-						},
-					},
-				},
-			},
-		},
-		setup = {
-			tsserver = function(_, opts)
-				require("typescript").setup({ server = opts })
-				return true
-			end,
-		},
+		-- opts = {
+		-- 	servers = {
+		-- 		tsserver = {
+		-- 			settings = {
+		-- 				typescript = {
+		-- 					preferGoToSourceDefinition = true,
+		-- 				},
+		-- 			},
+		-- 		},
+		-- 	},
+		-- },
+		-- setup = {
+		-- 	tsserver = function(_, opts)
+		-- 		require 'lspconfig'.tsserver.setup {
+		-- 		-- require("typescript").setup({ server = opts })
+		-- 		return true
+		-- 	end,
+		-- },
 	},
 	{
 		"echasnovski/mini.indentscope",
@@ -104,7 +105,7 @@ return {
 				unpack = unpack or table.unpack
 				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 				return col ~= 0
-					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+						and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
 			local luasnip = require("luasnip")
@@ -117,9 +118,9 @@ return {
 				end, { "i" }),
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if
-						not cmp.visible()
-						or not cmp.get_selected_entry()
-						or cmp.get_selected_entry().source.name == "nvim_lsp_signature_help"
+							not cmp.visible()
+							or not cmp.get_selected_entry()
+							or cmp.get_selected_entry().source.name == "nvim_lsp_signature_help"
 					then
 						fallback()
 					else

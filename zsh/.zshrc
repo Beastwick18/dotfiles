@@ -126,6 +126,9 @@ autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d
 
 ##
 
+# Add git-extras completions
+source /usr/share/doc/git-extras/git-extras-completion.zsh
+
 export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/startup.py"
 export GOPATH="$XDG_DATA_HOME"/go
@@ -139,6 +142,7 @@ export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 
 # gq() {
 #     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
@@ -151,6 +155,7 @@ alias sudoedit="sudo -E $EDITOR"
 alias ls="eza --icons=auto -a --git -1 --group-directories-first"
 alias wget="wget --hsts-file=\"$XDG_CACHE_HOME/wget-hsts\""
 alias g="lazygit"
+alias yay="paru"
 
 alias d="dot"
 alias dp="dot push"
