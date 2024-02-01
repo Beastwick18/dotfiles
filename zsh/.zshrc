@@ -129,7 +129,7 @@ autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d
 # Add git-extras completions
 source /usr/share/doc/git-extras/git-extras-completion.zsh
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin:$HOME/.local/share/cargo/bin
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/startup.py"
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
