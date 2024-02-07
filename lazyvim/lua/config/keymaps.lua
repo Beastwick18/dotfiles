@@ -10,11 +10,19 @@ local function map(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+-- Tab movement
 map("n", "<tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
+
+-- Saving and exiting
 map("n", ";w", ":w<cr>", { silent = true, desc = "Write file" })
 map("n", ";q", ":q<cr>", { silent = true, desc = "Quit file" })
+
+-- Window/buffer management
 map("n", "<leader>w", "<c-w>")
+map("n", "<C-X>", "<leader>bd")
+
+-- Normal and visual mode movement
 map("n", "H", "^", { desc = "Goto beginning of line" })
 map("n", "J", "}", { desc = "Go down paragraph" })
 map("n", "K", "{", { desc = "Go up paragraph", noremap = true })
@@ -23,10 +31,8 @@ map("v", "H", "^", { desc = "Goto beginning of line" })
 map("v", "J", "}", { desc = "Go down paragraph" })
 map("v", "K", "{", { desc = "Go up paragraph", noremap = true })
 map("v", "L", "$", { desc = "Goto end of line" })
--- map({ "n", "i", "t" }, "<C-\\>", function()
--- 	require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
--- end, { desc = "Open file browser" })
 
+-- Insert mode movement
 map("i", "<c-h>", "<left>", { desc = "Move left in insert mode" })
 map("i", "<c-j>", "<down>", { desc = "Move down in insert mode" })
 map("i", "<c-k>", "<up>", { desc = "Move up in insert mode" })

@@ -139,10 +139,15 @@ zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
 compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION"
 
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
+export HISTSIZE=1000
+export SAVEHIST=$HISTSIZE
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 
 # gq() {
 #     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
@@ -152,10 +157,13 @@ export EDITOR="/usr/bin/nvim"
 alias nvimc="$EDITOR $HOME/.config/nvim"
 alias zshc="$EDITOR $ZDOTDIR/.zshrc"
 alias sudoedit="sudo -E $EDITOR"
+alias svim="sudoedit"
 alias ls="eza --icons=auto -a --git -1 --group-directories-first"
 alias wget="wget --hsts-file=\"$XDG_CACHE_HOME/wget-hsts\""
 alias g="lazygit"
 alias yay="paru"
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 
 alias d="dot"
 alias dp="dot push"
@@ -166,3 +174,19 @@ alias di="dot install"
 alias dd="dot diff"
 alias dt="dot list"
 
+[[ ! -f "$ZDOTDIR/.local.zsh" ]] || source "$ZDOTDIR/.local.zsh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup=$("$XDG_DATA_HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$XDG_DATA_HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$XDG_DATA_HOME/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$XDG_DATA_HOME/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
