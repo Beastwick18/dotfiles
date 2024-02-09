@@ -1,5 +1,11 @@
 return {
 	{
+		"folke/noice.nvim",
+		keys = {
+			{ "<C-d>", "<cmd>NoiceDismiss<cr>", desc = "Dismiss notification" },
+		},
+	},
+	{
 		"echasnovski/mini.surround",
 		opts = {
 			mappings = {

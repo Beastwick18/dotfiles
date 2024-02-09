@@ -1,15 +1,20 @@
 #!/bin/python3
 
 import os
-import sys
-import subprocess
-import time
 from pathlib import Path
 from typing import Optional
+from subprocess import run
+from time import strftime
+from sys import argv
+
 import dotlib
 
 MAP_FILE = "dotfiles.json"
 APP_NAME = "dot"
+
+@dotlib.cmd(desc="Open a new shell in the same directory as your dotfiles")
+def cd():
+    run([os.environ['SHELL']], cwd=exe)
 
 @dotlib.cmd(desc="Install dotfiles by creating symlinks")
 def install():
@@ -20,24 +25,24 @@ def install():
 
 @dotlib.cmd(desc="Sync dotfiles with remote")
 def sync():
-    date = time.strftime("%m-%d-%y %H:%M:%S")
+    date = strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    subprocess.run(["git", "pull"], cwd=exe)
-    subprocess.run(["git", "add", "--all"], cwd=exe)
-    subprocess.run(["git", "commit", "-m", date], cwd=exe)
-    subprocess.run(["git", "push"], cwd=exe)
+    run(["git", "pull"], cwd=exe)
+    run(["git", "add", "--all"], cwd=exe)
+    run(["git", "commit", "-m", date], cwd=exe)
+    run(["git", "push"], cwd=exe)
 
 @dotlib.cmd(desc="Pull any changes from remote")
 def pull():
-    subprocess.run(["git", "pull"], cwd=exe)
+    run(["git", "pull"], cwd=exe)
 
 @dotlib.cmd(desc="Push any local changes to remote")
 def push():
-    date = time.strftime("%m-%d-%y %H:%M:%S")
+    date = strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    subprocess.run(["git", "add", "--all"], cwd=exe)
-    subprocess.run(["git", "commit", "-m", date], cwd=exe)
-    subprocess.run(["git", "push"], cwd=exe)
+    run(["git", "add", "--all"], cwd=exe)
+    run(["git", "commit", "-m", date], cwd=exe)
+    run(["git", "push"], cwd=exe)
 
 @dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
 def add(path: str, map_to: Optional[str]):
@@ -101,7 +106,7 @@ def unadd(name: str):
 
 @dotlib.cmd(desc="Show unsynced changes")
 def diff():
-    subprocess.run(["git", "diff"], cwd=exe)
+    run(["git", "diff"], cwd=exe)
 
 
 @dotlib.cmd(name="list", desc="List all mapped dotfiles")
@@ -127,4 +132,4 @@ def main(args):
     dotlib.run(APP_NAME, args, help_cmd="help")
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main(argv)

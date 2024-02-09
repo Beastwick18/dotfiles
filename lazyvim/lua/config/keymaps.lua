@@ -41,6 +41,7 @@ map("i", "<c-l>", "<right>", { desc = "Move right in insert mode" })
 map("n", "<F1>", "<nop>")
 map("i", "<F1>", "<nop>")
 
+-- LSP mappings
 map("n", "<leader>qf", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 map("n", "<C-n>", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 map({ "i" }, "<C-n>", function()
@@ -52,7 +53,7 @@ end, { desc = "Rename", noremap = false })
 map("n", "<F2>", function()
 	vim.lsp.buf.rename()
 end, { desc = "Rename", noremap = false })
-map("v", "S", "ys")
+vim.cmd([[vmap S ys]])
 
 -- map("n", "<leader>p", function()
 -- 	-- require("nabla").enable_virt({
