@@ -7,57 +7,57 @@ import typing
 from pathlib import Path
 
 
-def _is_union(param: Parameter):
+def __is_union(param: Parameter):
     t = typing.get_origin(param.annotation)
     return t is Union or t is UnionType
 
-def _is_optional(param: Parameter):
+def __is_optional(param: Parameter):
     field = param.annotation
-    return _is_union(param) and \
+    return __is_union(param) and \
            type(None) in typing.get_args(field)
 
+def is_required(param: Parameter):
+    return param.default is inspect._empty and not __is_optional(param)
 
-def _is_required(param: Parameter):
-    return param.default is inspect._empty and not _is_optional(param)
-
-class _Entry:
+class __Entry:
     def __init__(self, name: str, desc: str, func: Callable):
         self.name = name
         sig = signature(func)
         self.fullname = f"{name}"
         for p in sig.parameters:
             param = sig.parameters[p]
-            if _is_required(param):
+            if is_required(param):
                 self.fullname += f" <{param.name}>"
             else:
                 self.fullname += f" [{param.name}]"
         self.desc = desc
         self.func = func
 
-_cmds = dict[str,_Entry]()
-_default_cmd: Optional[Callable] = None
+__cmds = dict[str,__Entry]()
+__default_cmd: Optional[Callable] = None
 
-def _help(app_name: str):
+def __help(app_name: str, help_cmd: str):
     print(f"Usage: {app_name} <action>\nActions:")
     l = 0
-    for v in _cmds.values():
+    for v in __cmds.values():
         l = max(len(v.fullname), l)
-    for e in _cmds.values():
+    print(f"  {help_cmd:{l+2}} Show this message")
+    for e in __cmds.values():
         print(f"  {e.fullname:{l+2}} {e.desc}")
 
 def cmd(name: str | None = None, desc: str = "", default_cmd: bool = False):
     def create_entry(func: Callable):
-        global _cmds, _default_cmd
+        global __cmds, __default_cmd
         nonlocal name
         if name is None:
             name = str(func.__name__)
-        _cmds[name] = _Entry(name, desc, func)
+        __cmds[name] = __Entry(name, desc, func)
         if default_cmd:
             sig = signature(func)
-            required = sum(1 for p in sig.parameters if _is_required(sig.parameters[p]))
+            required = sum(1 for p in sig.parameters if is_required(sig.parameters[p]))
             if required != 0:
                 raise Exception(f"Number of required arguments must be 0, but was {required}")
-            _default_cmd = func
+            __default_cmd = func
     return create_entry
 
 def load_map(filename: str | Path) -> dict[str,str]:
@@ -111,7 +111,7 @@ def ask(q: str, default_yes: bool = False):
     result = input(f"{q} [{yes_no}] ").lower().strip()
     return not result == "n" and (result == "y" or default_yes)
 
-def _union_cast(union: UnionType, val: Any):
+def __union_cast(union: UnionType, val: Any):
     args = typing.get_args(union)
     val_type = type(val)
     # First check if type of val is already present in union
@@ -128,21 +128,21 @@ def _union_cast(union: UnionType, val: Any):
             pass
     raise Exception(f'Could not cast "{val}" to type in Union[{args}]')
 
-def _get_kwargs(func: Callable, args: list[str]):
+def __get_kwargs(func: Callable, args: list[str]):
     sig = signature(func)
     required = 0
     max = len(sig.parameters.keys())
-    required = sum(1 for p in sig.parameters if _is_required(sig.parameters[p]))
+    required = sum(1 for p in sig.parameters if is_required(sig.parameters[p]))
     given = len(args)
     args_given = args + [None] * (len(sig.parameters.keys()) - given)
     kwargs = dict[str, Any]()
     for p, g in zip(sig.parameters, args_given):
         param = sig.parameters[p]
-        if g is None and not _is_optional(param):
+        if g is None and not __is_optional(param):
             continue
         try:
-            if _is_union(param):
-                kwargs[p] = _union_cast(param.annotation, g)
+            if __is_union(param):
+                kwargs[p] = __union_cast(param.annotation, g)
             else:
                 kwargs[p] = param.annotation(g)
         except Exception as err:
@@ -153,22 +153,22 @@ def _get_kwargs(func: Callable, args: list[str]):
 
 def run(app_name: str, args: list[str], help_cmd: str = "--help"):
     if len(args) < 2:
-        if _default_cmd is None:
-            _help(app_name)
+        if __default_cmd is None:
+            __help(app_name, help_cmd)
         else:
-            _default_cmd()
+            __default_cmd()
         return
     if args[1] == help_cmd:
-        _help(app_name)
+        __help(app_name, help_cmd)
         return
-    if args[1] in _cmds:
-        e = _cmds[args[1]]
+    if args[1] in __cmds:
+        e = __cmds[args[1]]
         given = args[2:]
-        kwargs, required, max = _get_kwargs(e.func, given)
+        kwargs, required, max = __get_kwargs(e.func, given)
         if len(given) < required or len(given) > max:
             print(f"Error: Expected: {app_name} {e.fullname}")
             exit(1)
 
         exit(e.func(**kwargs))
     print(f"Error: Unknown command: {args[1]}")
-    _help(app_name)
+    __help(app_name, help_cmd)
