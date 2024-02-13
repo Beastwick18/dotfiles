@@ -3,3 +3,9 @@
 [user]
 	email = bradculwell@pm.me
 	name = Brad Culwell
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
