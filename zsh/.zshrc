@@ -173,6 +173,12 @@ alias da="dot add"
 alias di="dot install"
 alias dd="dot diff"
 alias dt="dot list"
+alias dc="dot cd"
+
+# Setup zoxide
+if command -v zoxide &> /dev/null ; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 [[ ! -f "$ZDOTDIR/.local.zsh" ]] || source "$ZDOTDIR/.local.zsh"
 

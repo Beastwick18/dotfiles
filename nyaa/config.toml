@@ -1,4 +1,7 @@
-torrent_client_cmd = "bash -c 'curl {torrent} > \"{title}.torrent\"'"
-default_category = 'AllAnime'
+# torrent_client_cmd = "bash -c 'curl {torrent} > \"{title}.torrent\"'"
+torrent_client_cmd = '''bash -c "curl {torrent} > '~/{title}.torrent'"'''
+default_category = 'AnimeEnglishTranslated'
 default_filter = 'NoFilter'
 default_sort = 'Date'
+default_theme = 'Gruvbox'
+default_search = '[subsplease]'
