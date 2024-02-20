@@ -1,5 +1,6 @@
 {
   "lazyvim": "~/.config/nvim",
+  "kitty": "~/.config/kitty",
   "git": "~/.config/git",
   "zsh": "~/.config/zsh",
   "zsh/zshenv": "/etc/zsh/zshenv",
@@ -8,5 +9,6 @@
   "nyaa": "~/.config/nyaa",
   "bin": "~/.local/bin/dotbin",
   "python": "~/.config/python",
-  "sqlite3": "~/.config/sqlite3"
+  "sqlite3": "~/.config/sqlite3",
+  "hypr": "~/.config/hypr"
 }
