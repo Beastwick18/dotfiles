@@ -156,6 +156,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export EDITOR="/usr/bin/nvim"
 alias nvimc="$EDITOR $HOME/.config/nvim"
 alias zshc="$EDITOR $ZDOTDIR/.zshrc"
+alias nyaac="$EDITOR $HOME/.config/nyaa/config.toml"
 alias sudoedit="sudo -E $EDITOR"
 alias svim="sudoedit"
 alias ls="eza --icons=auto -a --git -1 --group-directories-first"

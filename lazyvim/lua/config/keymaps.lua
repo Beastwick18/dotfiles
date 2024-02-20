@@ -20,7 +20,7 @@ map("n", ";q", ":q<cr>", { silent = true, desc = "Quit file" })
 
 -- Window/buffer management
 map("n", "<leader>w", "<c-w>")
-map("n", "<C-X>", "<leader>bd")
+map("n", "<C-d>", "<leader>bd")
 
 -- Normal and visual mode movement
 map("n", "H", "^", { desc = "Goto beginning of line" })
