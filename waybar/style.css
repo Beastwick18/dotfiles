@@ -74,7 +74,6 @@ window#waybar {
 #battery, #workspaces {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding-left: 5px;
   margin-left: 0;
   margin-left: 0;
   border-left: 1px solid #20202c;

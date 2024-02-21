@@ -11,5 +11,6 @@
   "python": "~/.config/python",
   "sqlite3": "~/.config/sqlite3",
   "hypr": "~/.config/hypr",
-  "waybar": "~/.config/waybar"
+  "waybar": "~/.config/waybar",
+  "wofi": "~/.config/wofi"
 }
