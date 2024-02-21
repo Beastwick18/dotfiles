@@ -90,6 +90,10 @@ window#waybar {
   border-left: 1px solid #20202c;
 }
 
+#workspaces:hover {
+  border: none;
+}
+
 #clock {
   margin-right: 0;
   margin-left: 0;
