@@ -1,3 +1,4 @@
+// vim:ft=json
 {
   "layer": "top",
   "modules-left": ["custom/arch", "hyprland/workspaces"],
@@ -6,7 +7,7 @@
   "custom/arch": {
     "format": " ",
     "tooltip": false,
-    "on-click": "sh $HOME/.config/rofi/bin/powermenu"
+    "on-click": "sh $HOME/.config/waybar/bin/wofi"
   },
   "hyprland/workspaces": {
     "format": "{name}",

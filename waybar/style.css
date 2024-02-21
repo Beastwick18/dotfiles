@@ -12,8 +12,9 @@ window#waybar {
 
 #custom-arch, #workspaces {
   border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   background-color: #11111b;
-  margin-top: 10px;
   padding-top: 1px;
   padding-left: 15px;
   padding-right: 10px;
@@ -43,13 +44,23 @@ window#waybar {
 
 #clock, #backlight, #pulseaudio, #bluetooth, #network, #battery, #tray {
   border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   background-color: #11111b;
   color: #cdd6f4;
-  margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
   margin-right: 15px;
-  margin-right: 15px;
+}
+
+#tray {
+  margin-right: 0;
+  border-bottom-right-radius: 0;
+}
+
+#custom-arch {
+  margin-left: 0;
+  border-bottom-left-radius: 0;
 }
 
 #battery {
