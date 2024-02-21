@@ -10,5 +10,6 @@
   "bin": "~/.local/bin/dotbin",
   "python": "~/.config/python",
   "sqlite3": "~/.config/sqlite3",
-  "hypr": "~/.config/hypr"
+  "hypr": "~/.config/hypr",
+  "waybar": "~/.config/waybar"
 }
