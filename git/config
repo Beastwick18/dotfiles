@@ -9,3 +9,5 @@
 	ui = auto
 [branch]
 	sort = -committerdate
+[pull]
+	rebase = true
