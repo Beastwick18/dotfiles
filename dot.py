@@ -27,9 +27,9 @@ def install():
 def sync():
     date = strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    run(["git", "pull"], cwd=exe)
     run(["git", "add", "--all"], cwd=exe)
     run(["git", "commit", "-m", date], cwd=exe)
+    run(["git", "pull"], cwd=exe)
     run(["git", "push"], cwd=exe)
 
 @dotlib.cmd(desc="Pull any changes from remote")
