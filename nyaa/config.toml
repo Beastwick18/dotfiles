@@ -1,6 +1,19 @@
-torrent_client_cmd = 'bash -c "curl {torrent} > ~/torrents/{title}.torrent"'
-default_category = 'AllCategories'
-default_filter = 'NoFilter'
-default_sort = 'Date'
-default_theme = 'Default'
-default_search = ''
+default_category = "AllCategories"
+default_filter = "NoFilter"
+default_sort = "Date"
+default_search = ""
+theme = "Dracula"
+source = "NyaaRss"
+download_client = "qBittorrent"
+date_format = "%Y-%m-%d %H:%M"
+base_url = "https://nyaa.si/"
+timeout = 30
+
+[client.command]
+cmd = "curl \"{torrent}\" > ~/{file}"
+shell_cmd = "sh -c"
+
+[client.qBittorrent]
+base_url = "http://localhost:8080"
+username = "admin"
+password = "adminadmin"
