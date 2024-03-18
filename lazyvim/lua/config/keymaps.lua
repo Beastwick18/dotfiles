@@ -43,6 +43,7 @@ map("i", "<F1>", "<nop>")
 
 -- LSP mappings
 map("n", "<leader>qf", "<cmd>lua vim.lsp.buf.code_action()<cr>")
+map("n", "<C-.>", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 map("n", "<C-n>", "<cmd>lua vim.lsp.buf.code_action()<cr>")
 map({ "i" }, "<C-n>", function()
 	vim.lsp.buf.code_action()
