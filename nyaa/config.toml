@@ -3,7 +3,7 @@ default_filter = "NoFilter"
 default_sort = "Date"
 default_search = ""
 theme = "Dracula"
-source = "NyaaRss"
+source = "NyaaHtml"
 download_client = "qBittorrent"
 date_format = "%Y-%m-%d %H:%M"
 base_url = "https://nyaa.si/"
@@ -17,3 +17,22 @@ shell_cmd = "sh -c"
 base_url = "http://localhost:8080"
 username = "admin"
 password = "adminadmin"
+tags = [
+    "Ttesting",
+    "testing, 2",
+]
+
+[client.transmission]
+base_url = "http://localhost:9091/transmission/rpc"
+username = "user"
+password = "pass"
+labels = ["nyaa"]
+paused = true
+peer_limit = 12
+download_dir = "/home/brad/Downloads/trans/"
+bandwidth_priority = 1
+
+[client.default_app]
+
+[client.download]
+save_dir = "~/Downloads/test"
