@@ -148,6 +148,7 @@ export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker 
 
 # gq() {
 #     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
