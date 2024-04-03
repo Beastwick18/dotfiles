@@ -10,7 +10,7 @@ return {
 		branch = "tilde",
 		keys = {
 			{
-				"<leader>p",
+				"<C-p>",
 				function()
 					require("nabla").toggle_virt({
 						autogen = true,

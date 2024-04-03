@@ -166,6 +166,7 @@ alias g="lazygit"
 alias yay="paru"
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+alias cat='bat'
 
 alias d="dot"
 alias dp="dot push"
@@ -176,6 +177,9 @@ alias di="dot install"
 alias dd="dot diff"
 alias dt="dot list"
 alias dc="dot cd"
+
+alias todo="bat --plain ~/todo.md"
+alias todoc="$EDITOR ~/todo.md"
 
 # Setup zoxide
 if command -v zoxide &> /dev/null ; then
@@ -198,3 +202,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+bat --plain --color=always ~/todo.md
