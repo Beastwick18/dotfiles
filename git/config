@@ -3,6 +3,7 @@
 [user]
 	email = bradculwell@pm.me
 	name = Brad Culwell
+	signingkey = A559491D2E38FCCF
 [rerere]
 	enabled = true
 [column]
@@ -11,3 +12,7 @@
 	sort = -committerdate
 [pull]
 	rebase = true
+[alias]
+	unadd = reset HEAD --
+[commit]
+	gpgsign = false

@@ -85,7 +85,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    zsh-autosuggestions
+)
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion) 
 
 # source $ZSH/oh-my-zsh.sh
 
@@ -128,6 +133,7 @@ autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d
 
 # Add git-extras completions
 source /usr/share/doc/git-extras/git-extras-completion.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
 export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin:$HOME/.local/share/cargo/bin
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/startup.py"
@@ -144,17 +150,20 @@ export SAVEHIST=$HISTSIZE
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
+# export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker 
+export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+export GPG_TTY=$(tty)
 
 # gq() {
 #     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
 # }
 
 export EDITOR="/usr/bin/nvim"
+export MANPAGER='nvim +Man!'
 alias nvimc="$EDITOR $HOME/.config/nvim"
 alias zshc="$EDITOR $ZDOTDIR/.zshrc"
 alias nyaac="$EDITOR $HOME/.config/nyaa/config.toml"
@@ -204,4 +213,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-bat --plain --color=always ~/todo.md
+# bat --plain --color=always ~/todo.md
