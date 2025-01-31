@@ -1,5 +1,5 @@
 {
-  "lazyvim": "~/.config/nvim",
+  "nvim": "~/.config/nvim",
   "kitty": "~/.config/kitty",
   "git": "~/.config/git",
   "zsh": "~/.config/zsh",

@@ -12,13 +12,22 @@ import dotlib
 MAP_FILE = "dotfiles.json"
 APP_NAME = "dot"
 
+@dotlib.cmd(desc="Open the mapped config path in the default $EDITOR")
+def config(name: str):
+    run([os.environ['EDITOR'], os.path.expanduser(cfg[name])])
+
 @dotlib.cmd(desc="Open a new shell in the same directory as your dotfiles")
 def cd():
     run([os.environ['SHELL']], cwd=exe)
 
 @dotlib.cmd(desc="Install dotfiles by creating symlinks")
-def install():
+def install(name: Optional[str]):
     os.chdir(exe)
+
+    if name is not None:
+        dotlib.create_link(cfg, name)
+        return
+
     for k in cfg:
         dotlib.create_link(cfg, k)
     os.chdir(cwd)
@@ -46,7 +55,7 @@ def push():
 
 @dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
 def add(path: str, map_to: Optional[str]):
-    home = Path.home().absolute()
+    home = str(Path.home().absolute())
     orig = Path(path).expanduser().absolute()
     if not map_to:
         dotfile = exe.joinpath(orig.name)
@@ -56,8 +65,8 @@ def add(path: str, map_to: Optional[str]):
 
     # Replace /home/$USER with ~
     link_to = str(orig)
-    if link_to.startswith(str(home)):
-        link_to = link_to.replace(str(home), "~", 1)
+    if link_to.startswith(home):
+        link_to = link_to.replace(home, "~", 1)
 
     if not orig.exists():
         print(f"{orig}: Does not exist")
