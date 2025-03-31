@@ -11,13 +11,17 @@ def __is_union(param: Parameter):
     t = typing.get_origin(param.annotation)
     return t is Union or t is UnionType
 
+def is_list(param: Parameter):
+    t = typing.get_origin(param.annotation)
+    return t is list
+
 def __is_optional(param: Parameter):
     field = param.annotation
     return __is_union(param) and \
            type(None) in typing.get_args(field)
 
 def is_required(param: Parameter):
-    return param.default is inspect._empty and not __is_optional(param)
+    return param.default is inspect._empty and not __is_optional(param) and not is_list(param)
 
 class __Entry:
     def __init__(self, name: str, desc: str, func: Callable):
@@ -26,8 +30,11 @@ class __Entry:
         self.fullname = f"{name}"
         for p in sig.parameters:
             param = sig.parameters[p]
+
             if is_required(param):
                 self.fullname += f" <{param.name}>"
+            elif is_list(param):
+                self.fullname += f" [...{param.name}]"
             else:
                 self.fullname += f" [{param.name}]"
         self.desc = desc
@@ -136,13 +143,20 @@ def __get_kwargs(func: Callable, args: list[str]):
     given = len(args)
     args_given = args + [None] * (len(sig.parameters.keys()) - given)
     kwargs = dict[str, Any]()
-    for p, g in zip(sig.parameters, args_given):
+    for i, (p, g) in enumerate(zip(sig.parameters, args_given)):
         param = sig.parameters[p]
-        if g is None and not __is_optional(param):
+        if g is None and not __is_optional(param) and not is_list(param):
             continue
         try:
             if __is_union(param):
                 kwargs[p] = __union_cast(param.annotation, g)
+            elif is_list(param):
+                if g is None:
+                    kwargs[p] = list()
+                else:
+                    kwargs[p] = args_given[i:]
+                max = float('inf')
+                break
             else:
                 kwargs[p] = param.annotation(g)
         except Exception as err:
@@ -166,6 +180,7 @@ def run(app_name: str, args: list[str], help_cmd: str = "--help"):
         given = args[2:]
         kwargs, required, max = __get_kwargs(e.func, given)
         if len(given) < required or len(given) > max:
+            print(required, given)
             print(f"Error: Expected: {app_name} {e.fullname}")
             exit(1)
 

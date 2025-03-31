@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+cd ~
+mv $HISTFILE ${HISTFILE}_bad
+strings ${HISTFILE}_bad > $HISTFILE
+fc -R $HISTFILE
+rm ${HISTFILE}_bad

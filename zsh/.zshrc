@@ -164,7 +164,7 @@ export GPG_TTY=$(tty)
 #     git add --all && git commit -m "`date +'%m-%d-%y %H:%M:%S'`" && git push
 # }
 
-export EDITOR="/usr/bin/nvim"
+export EDITOR="/usr/sbin/nvim"
 export MANPAGER='nvim +Man!'
 alias nvimc="$EDITOR $HOME/.config/nvim"
 alias zshc="$EDITOR $ZDOTDIR/.zshrc"
@@ -178,6 +178,7 @@ alias yay="paru"
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias cat='bat'
+alias config='dot config'
 
 alias d="dot"
 alias dp="dot push"

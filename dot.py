@@ -13,19 +13,43 @@ MAP_FILE = "dotfiles.json"
 APP_NAME = "dot"
 
 @dotlib.cmd(desc="Open the mapped config path in the default $EDITOR")
-def config(name: str):
-    run([os.environ['EDITOR'], os.path.expanduser(cfg[name])])
+def config(name: Optional[str]):
+    if 'EDITOR' not in os.environ or len(os.environ['EDITOR']) == 0:
+        editor = 'vim'
+    else:
+        editor = os.environ['EDITOR']
+
+    if name is None:
+        run([editor, exe])
+        return 0
+
+    if name not in cfg:
+        for k, v in cfg.items():
+            if os.path.basename(k.rstrip('/')) == name:
+                run([editor, os.path.expanduser(v)])
+                return 0
+
+        for k, v in cfg.items():
+            if os.path.basename(v.rstrip('/')) == name:
+                run([editor, os.path.expanduser(v)])
+                return 0
+
+        print(f'ERROR: "{name}" does not map to a known config path. See `dot list` for all mappings')
+        return 1
+
+    run([editor, os.path.expanduser(cfg[name])])
 
 @dotlib.cmd(desc="Open a new shell in the same directory as your dotfiles")
 def cd():
     run([os.environ['SHELL']], cwd=exe)
 
 @dotlib.cmd(desc="Install dotfiles by creating symlinks")
-def install(name: Optional[str]):
+def install(names: list[str]):
     os.chdir(exe)
 
-    if name is not None:
-        dotlib.create_link(cfg, name)
+    if len(names) > 0:
+        for n in names:
+            dotlib.create_link(cfg, n)
         return
 
     for k in cfg:

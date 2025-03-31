@@ -1,5 +1,17 @@
 return {
 	{
+		"nvim-lualine/lualine.nvim",
+		opts = {
+			sections = {
+				lualine_z = {
+					function()
+						return " " .. os.date("%-I:%02M %p")
+					end,
+				},
+			},
+		},
+	},
+	{
 		"LazyVim/LazyVim",
 		opts = {
 			colorscheme = "catppuccin-mocha",
@@ -40,9 +52,9 @@ return {
 	{
 		"williamboman/mason.nvim",
 		enabled = true,
-		opts = function(_, opts)
-			opts.ensure_installed = {}
-		end,
+		-- opts = function(_, opts)
+		-- 	opts.ensure_installed = {}
+		-- end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -72,6 +84,7 @@ return {
 			},
 		},
 		opts = {
+			close_if_last_window = true,
 			filesystem = {
 				filtered_items = {
 					visible = true,
@@ -219,7 +232,7 @@ return {
 		"snacks.nvim",
 		opts = {
 			-- indent = { enabled = true },
-			-- input = { enabled = true },
+			input = { enabled = false },
 			-- notifier = { enabled = true },
 			-- scope = { enabled = true },
 			scroll = { enabled = false },
