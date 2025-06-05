@@ -1,5 +1,5 @@
 [credential]
-	helper = store --file ~/.config/git/credentials
+	helper = store
 [user]
 	email = bradculwell@pm.me
 	name = Brad Culwell

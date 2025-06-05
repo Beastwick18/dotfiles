@@ -135,7 +135,7 @@ autoload -U compinit -d "$ZSH_COMPDUMP/zcompdump-$ZSH_VERSION" && compinit -u -d
 source /usr/share/doc/git-extras/git-extras-completion.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/.local/bin/dotbin:$HOME/go/bin:$HOME/.local/share/cargo/bin
+export PATH=$HOME/.local/bin:$HOME/.local/bin/dotbin:$PATH:$HOME/go/bin:$HOME/.local/share/cargo/bin
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/startup.py"
 export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
@@ -166,9 +166,13 @@ export GPG_TTY=$(tty)
 
 export EDITOR="/usr/sbin/nvim"
 export MANPAGER='nvim +Man!'
+
 alias nvimc="$EDITOR $HOME/.config/nvim"
 alias zshc="$EDITOR $ZDOTDIR/.zshrc"
 alias nyaac="$EDITOR $HOME/.config/nyaa/config.toml"
+alias hyprc="$EDITOR $HOME/.config/hypr/"
+alias panelc="$EDITOR $HOME/.config/hypr/"
+
 alias sudoedit="sudo -E $EDITOR"
 alias svim="sudoedit"
 alias ls="eza --icons=auto -a --git -1 --group-directories-first"
@@ -179,6 +183,7 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias cat='bat'
 alias config='dot config'
+alias icat="kitten icat"
 
 alias d="dot"
 alias dp="dot push"

@@ -3,3 +3,4 @@
 -- Add any additional options here
 
 vim.cmd([[set noswapfile]])
+vim.lsp.enable("nushell")

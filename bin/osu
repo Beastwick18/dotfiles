@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [[ -n "$1" ]]; then
+  hyprshade on ~/.local/share/hyprshade/shaders/osu.glsl.mustache --var value=$1
+else
+  hyprshade off
+fi

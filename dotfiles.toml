@@ -1,0 +1,18 @@
+[dotfiles]
+"nvim" = { path = "~/.config/nvim", packages = ["neovim"] }
+"kitty" = { path = "~/.config/kitty", packages = ["kitty"] }
+"git" = { path = "~/.config/git", packages = ["git"] }
+"zsh" = { path = "~/.config/zsh", packages = ["zsh"] }
+"zsh/zshenv" = { path = "/etc/zsh/zshenv", packages = ["zsh"] }
+"npm" = { path = "~/.config/npm", packages = ["node", "npm"] }
+"dot" = { path = "~/.local/bin/dot.py" }
+"nyaa" = { path = "~/.config/nyaa", packages-aur = ["nyaa-bin"] }
+"bin" = { path = "~/.local/bin/dotbin" }
+"python" = { path = "~/.config/python", packages = ["python3"] }
+"sqlite3" = { path = "~/.config/sqlite3", packages = [] }
+"hypr" = { path = "~/.config/hypr", packages = ["hyprland"] }
+"waybar" = { path = "~/.config/waybar", packages = ["waybar"] }
+"wofi" = { path = "~/.config/wofi", packages = ["wofi"] }
+"hyprpanel" = { path = "~/.config/hyprpanel", packages-aur = ["hyprpanel-bin"] }
+"nushell" = { path = "~/.config/nushell", packages = ["nu"] }
+"starship" = { path = "~/.config/starship", packages = ["starship"] }

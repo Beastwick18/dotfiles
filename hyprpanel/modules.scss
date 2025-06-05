@@ -1,0 +1,58 @@
+.workspaces {
+    label {
+        font-size: 0.2em;
+        min-width: $bar-buttons-workspaces-pill-width;
+        min-height: $bar-buttons-workspaces-pill-height;
+        border-radius: $bar-buttons-workspaces-pill-radius;
+        transition: max-width 0.2s ease,min-width 0.2s ease;
+        background-color: $bar-buttons-workspaces-available;
+        color: $bar-buttons-workspaces-available;
+
+        &.occupied {
+            background-color: $bar-buttons-workspaces-occupied;
+            color: $bar-buttons-workspaces-occupied;
+            min-width: $bar-buttons-workspaces-pill-width;
+            min-height: $bar-buttons-workspaces-pill-height;
+        }
+
+        &.active {
+            background-color: $bar-buttons-workspaces-active;
+            color: $bar-buttons-workspaces-active;
+            min-width: $bar-buttons-workspaces-pill-active_width;
+            min-height: $bar-buttons-workspaces-pill-height;
+        }
+
+        &.workspace-icon {
+            background-color: transparent;
+            min-width: 0em;
+            min-height: 0em;
+            border-radius: 0em;
+            transition: max-width 0.2s ease,min-width 0.2s ease;
+            font-size: 1em;
+        }
+
+        &.workspace-number {
+            background-color: transparent;
+            min-width: 0em;
+            min-height: 0em;
+            border-radius: 0em;
+            transition: max-width 0.2s ease,min-width 0.2s ease;
+            padding: 0em $bar-buttons-workspaces-numbered_inactive_padding;
+            font-size: $bar-buttons-workspaces-fontSize;
+        }
+
+        &.underline {
+            border-top: 0.1em solid transparent;
+            border-bottom: 0.1em solid $bar-buttons-workspaces-numbered_active_underline_color;
+            transition: max-width 0.2s ease,min-width 0.2s ease;
+        }
+
+        &.highlight {
+            transition: max-width 0.2s ease,min-width 0.2s ease;
+            color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
+            border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+            background-color: $bar-buttons-workspaces-active;
+            padding: 0em $bar-buttons-workspaces-numbered_active_highlight_padding;
+        }
+    }
+}

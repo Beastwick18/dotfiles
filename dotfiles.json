@@ -12,5 +12,9 @@
   "sqlite3": "~/.config/sqlite3",
   "hypr": "~/.config/hypr",
   "waybar": "~/.config/waybar",
-  "wofi": "~/.config/wofi"
+  "wofi": "~/.config/wofi",
+  "hyprpanel": "~/.config/hyprpanel",
+  "nushell": "~/.config/nushell",
+  "starship": "~/.config/starship",
+  "hyprshade": "~/.local/share/hyprshade"
 }

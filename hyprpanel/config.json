@@ -1,0 +1,98 @@
+{
+  "terminal": "kitty",
+  "theme.font.size": "1rem",
+  "theme.bar.buttons.enableBorders": false,
+  "theme.bar.border.location": "none",
+  "theme.bar.enableShadow": false,
+  "theme.bar.margin_top": "0em",
+  "theme.font.name": "JetBrainsMono Nerd Font Mono",
+  "theme.font.label": "JetBrainsMono Nerd Font Mono",
+  "theme.bar.floating": false,
+  "theme.bar.margin_sides": "0em",
+  "menus.dashboard.shortcuts.left.shortcut3.command": "flatpak run com.discordapp.Discord",
+  "menus.dashboard.shortcuts.left.shortcut1.icon": "󰈹",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Zen Browser",
+  "menus.dashboard.shortcuts.left.shortcut1.command": "zen-browser",
+  "menus.dashboard.shortcuts.left.shortcut4.command": "wofi --show drun",
+  "menus.dashboard.directories.enabled": false,
+  "menus.dashboard.stats.enable_gpu": false,
+  "menus.dashboard.controls.enabled": true,
+  "menus.dashboard.powermenu.avatar.image": "/home/brad/Pictures/migu-cropped.png",
+  "menus.clock.weather.location": "Fort Worth",
+  "menus.clock.weather.key": ".config/hyprpanel/weatherkey.json",
+  "theme.bar.menus.monochrome": false,
+  "wallpaper.pywal": false,
+  "theme.bar.menus.background": "#11111b",
+  "theme.bar.menus.opacity": 100,
+  "theme.bar.transparent": true,
+  "theme.osd.location": "top right",
+  "theme.osd.enableShadow": true,
+  "bar.autoHide": "never",
+  "theme.bar.location": "top",
+  "theme.bar.buttons.clock.enableBorder": false,
+  "theme.bar.buttons.modules.microphone.enableBorder": false,
+  "bar.customModules.microphone.label": true,
+  "theme.bar.menus.enableShadow": true,
+  "menus.transition": "crossfade",
+  "scalingPriority": "hyprland",
+  "menus.power.showLabel": true,
+  "bar.battery.label": false,
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    }
+  },
+  "theme.bar.buttons.dashboard.icon": "#16e4e0",
+  "theme.bar.buttons.workspaces.hover": "#16e4e0",
+  "theme.bar.buttons.workspaces.active": "#16e4e0",
+  "theme.bar.buttons.workspaces.occupied": "#198282",
+  "theme.bar.buttons.workspaces.available": "#125b5a",
+  "bar.workspaces.show_icons": false,
+  "bar.workspaces.showWsIcons": false,
+  "bar.workspaces.showApplicationIcons": false,
+  "bar.workspaces.show_numbered": false
+}

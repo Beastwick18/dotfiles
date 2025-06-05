@@ -1,0 +1,19 @@
+precision highp float;
+varying vec2 v_texcoord;
+uniform sampler2D tex;
+
+float warp = 0.75; // simulate curvature of CRT monitor
+float scan = 0.75; // simulate darkness between scanlines
+
+void main() {
+  // squared distance from center
+  vec2 uv = v_texcoord/iResolution.xy;
+  vec2 dc = abs(0.5-uv);
+  dc *= dc;
+  
+  // determine if we are drawing in a scanline
+  float apply = abs(sin(fragCoord.y)*0.5*scan);
+  // sample the texture
+  fragColor = vec4(mix(texture(iChannel0,uv).rgb,vec3(0.0),apply),1.0);
+  gl_FragColor.rgb = gammaColor;
+}

@@ -1,0 +1,19 @@
+precision highp float;
+varying vec2 v_texcoord;
+uniform sampler2D tex;
+
+const float Value = float({{#nc}}{{value}} ? 1.0{{/nc}});
+
+void main()
+{
+  vec4 pixColor = texture2D(tex, v_texcoord);
+  float average = (pixColor[0] + pixColor[1] + pixColor[2]) / 3.0;
+  // if (average < 0.15) {
+  pixColor[0] = pixColor[0] * pixColor[0] * (1.0 - Value) + pixColor[0] * Value;
+  pixColor[1] = pixColor[1] * pixColor[1] * (1.0 - Value) + pixColor[1] * Value;
+  pixColor[2] = pixColor[2] * pixColor[2] * (1.0 - Value) + pixColor[2] * Value;
+  // }
+  vec3 color = vec3(pixColor[0], pixColor[1], pixColor[2]);
+
+  gl_FragColor.rgb = color;
+}

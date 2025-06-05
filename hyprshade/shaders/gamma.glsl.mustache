@@ -1,0 +1,14 @@
+precision highp float;
+varying vec2 v_texcoord;
+uniform sampler2D tex;
+
+const float Gamma = float({{#nc}}{{gamma}} ? 1.0{{/nc}});
+
+void main()
+{
+  vec4 pixColor = texture2D(tex, v_texcoord);
+  vec3 color = vec3(pixColor[0], pixColor[1], pixColor[2]);
+  vec3 gammaColor = pow(color.rgb, vec3(1.0/Gamma));
+
+  gl_FragColor.rgb = gammaColor;
+}

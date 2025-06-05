@@ -1,0 +1,884 @@
+nvim
+fg
+job unfreeze
+alias
+alias fg="job unfreeze"
+alias fg = job unfreeze
+fg
+nvim
+fg
+ls
+ls -lag
+ls
+pwd
+job
+job help
+job --help
+job id
+job list
+nvim
+edit
+job list
+fg
+job list
+job --help
+job send --help
+echo 'q' | job send 3
+fg
+nu -V
+nu -v
+nuc
+config
+config nu
+sudo pacman -S starship
+whoami
+exit
+nvi
+whoami
+pwd
+nvim ~/.config/nyaa/config.toml
+nvim ~/.config/starship.toml
+fg
+as
+which as
+job unfreeze
+fg
+job unfreeze
+nvim
+fg
+nvim ~/.config/nushell/
+dot help
+which dot
+fg
+config nu
+config env
+"asdf" "fdas"
+"asdf".."fdas"
+"asdf"+"fdas"
+echo "asdf""fdas"
+"asdf" | append "fdas"
+str join 
+"asdf" | append "fdas" | str join
+"asdf" | append "fdas" | str join " "
+`$env.HOME`
+`$env.HOME/`
+echo `$env.HOME/`
+$"$env.HOME"
+$"($env.HOME)"
+$"($env.HOME)/.local/bin"
+$env.PATH
+$env.PATH | append $"($env.HOME)/.local/bin"
+$env.PATH | prepend  $"($env.HOME)/.local/bin"
+which dot
+dot help
+dot list
+dot config
+dot config python
+$env.PATH
+whoami
+pwd
+clear
+cd ~/.config
+ls
+dot add nushell
+dot add
+dot add starship starship/starship.toml
+fg
+dot config
+dot add starship starship/starship.toml
+fg
+dot add starship.toml starship/starship.toml
+fg
+rm ~/.config/starship.toml
+fg
+dot install starship
+ls ~/.config/starship
+echo $env.STARSHIP_CONFIG
+whoami
+cd repos/nyaa/
+->
+which ->
+nyaa
+hyprc
+config
+which config
+config nu
+dot config nushell
+config nu
+which config
+config nushell
+config env
+config nushell
+config asdf
+config hypr
+dot config
+ls ~/.config
+ls ~/.config | where type != symlink
+ls ~/.config | where type != symlink | where type != file
+ls ~/.config/swww
+swww
+nvim ~/.config/swww/swww.sh
+~/.config/swww/swww.sh
+fg
+"asdf" | append "fdas" "asdf"
+"asdf" | append "append" | prepend "before"
+fg
+random-wallpaper 
+fg
+echo $env.WALLPAPERS_DIR
+random-wallpaper 
+alias 
+random-wallpaper 
+fg
+which fg
+alias fg
+alias --help
+aka
+abbr
+ll
+clear
+all
+clear
+asdf
+fg
+job unfreeze --help
+job unfreeze || ""
+job unfreeze or ""
+try { job unfreeze }
+try { job unfreeze } catch { print "jobless" }
+zsh
+try { job unfreeze } catch { print "fg: no current job" }
+fg
+alias fg = try { job unfreeze } catch { print "fg: no current job" }
+fg
+nvim
+fg
+nvim 
+fg
+job list
+job kill 1
+fg
+config nu
+$env.HOME | path join "/.config"
+path $env.HOME | path join "/.config"
+path parse $env.HOME
+path parse
+$env.HOME | path parse
+$env.HOME | path parse | path join "/.config"
+$env.HOME | path parse | path join ".config"
+$env.HOME | path parse | path join ".config/nushell/file"
+$env.HOME | path join ".config/nushell/file"
+$env.HOME | path join "././.config/nushell/file"
+"/home/brad///test" | path join ".config"
+"/home/brad///test" | path parse
+"/home/brad///test" | path parse | path join ".config/test"
+fg
+$nu.data-dir
+fg
+starship init nu
+fg
+useradd -aG brad storage
+useradd --help
+config nu
+fish
+fg
+usermod -aG brad
+usermod -G brad
+usermod -aG brad storage
+sudo pacman -S polkit-gnome
+sudo pacman -S polkit
+sudo pacman -S gparted
+gparted 
+nvim "/usr/share/applications/polkit-gnome-authentication-agent-1.desktop"
+sudo -E nvim "/usr/share/applications/polkit-gnome-authentication-agent-1.desktop"
+gparted
+systemctl enable --now polkit.service
+sudo echo hey
+hyprc
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/home/brad/.local/share/Steam/steamapps/common/ELDEN RING/Game/SeamlessCoop
+cd /home/brad/.local/share/Steam/steamapps/common/ELDEN RING/Game/SeamlessCoop
+cd "/home/brad/.local/share/Steam/steamapps/common/ELDEN RING/Game/SeamlessCoop"
+ls
+nvim "ersc_settings.ini"
+fg
+config wofi
+config hypr
+fg
+nvim "../mod_loader.ini"
+cd ..
+ls
+cd mods
+ls
+cd CameraDistance/
+ls
+nvim "config.ini"
+cd ..
+ls
+cd ..
+mkdir CameraDist
+rm -rf CameraDist/
+cd mods
+mkdir CameraDist
+mv CameraDistance CameraDist/CameraDistance -r
+mv CameraDistance CameraDist/CameraDistance
+mv CameraDistance.dll CameraDist/
+mv bin CameraDist/bin
+ls
+mkdir DisableWobble
+mv DisableCameraWobble.dll DisableWobble/
+mv DisableCameraWobble/ DisableWobble/DisableCameraWobble
+ls
+cd ..
+sudo pacman -S yt-dlp
+yt-dlp
+yt-dlp --help
+tldr
+sudo pacman -S tealdeer
+tldr
+tldr --update
+tldr yt-dlp
+yt-dlp -x 'https://www.youtube.com/watch?v=p0QGsCqmxIc&list=PLRDqvTvTDqML_vMRyR3HYYawx6ZdyTiyB&index=1'
+ls
+mv '【ASMR】kissing💕licking [p0QGsCqmxIc].opus' 'asmr [p0QGsCqmxIc].opus'
+mv 'asmr [p0QGsCqmxIc].opus' Music/
+rm 'Kissing Your Screen [ASMR] ~ Glass Kisses Effect 💕 [jWaaD4M4sMw].webm.part'
+ls
+a.out
+./a.out
+cat a.out
+rm a.out
+ls
+ls -la
+ls -lag
+ls -la
+ls -al
+asdf
+rm -rf Templates/
+ls
+rm -rf Public/
+ls
+ls -al
+mise
+tldr mise
+cd repos/nyaa
+nvim .
+cargo run
+fg
+config nu
+fg
+sudo pacman -S carapace
+yay -S carapcae
+yay -S carapace
+fg
+yay
+paru -S carapace-bin
+fg
+cd n
+cd ny
+zoxide 
+cargo run
+fg
+cargo run
+fg
+exit
+cd ny
+config env
+config nu
+ls ~/.local/share/nushell/
+cd n
+cd repos/nyaa
+cd n
+cd ~
+cd n
+ls
+pwd
+fg
+$env.config-dir
+$env.config
+$env.defaul-config-dir
+fg
+zshc
+config zsh
+fg
+yy
+yay
+which yay
+which which
+clear
+config nu
+sudo pacman -S neovim
+fg
+sudo pacman -S npm
+fg
+sudo pacman -S python3
+fg
+sudo pacman -S sqlite3
+fg
+sudo pacman -S hyprland
+fg
+sudo pacman -S waybar
+fg
+sudo pacman -S wofi
+fg
+sudo pacman -S hyprpanel
+fg
+yay -S hyprpanel
+fg
+sudo pacman -S nu
+sudo pacman -S nushell
+fg
+sudo pacman -S starship
+fg
+cd ~/repos/dotfiles/
+python test.py 
+fg
+python test.py 
+fg
+hyprc
+config hypr
+fg
+nvim ~/.config/hypr
+nvim
+ls ~/.config
+cd ~/repos/dotfiles
+ls
+ls nvim
+nvim dotlib.py 
+dot
+nvim dot.py
+dot
+dot install nvim
+ls ~/.config/nvim
+nvim
+nvimc
+zsh
+nvim
+which nvim
+config nu
+config env
+nvim
+config hypr
+~/.config/swww/swww.sh
+bash ~/.config/swww/swww.sh
+random-wallpaper 
+swww
+swww img --help
+config hypr
+hyprctl 
+hyprctl monitors
+fg
+random-wallpaper 
+yay -S waypaper
+sudo pacman -S waypaper
+yay -S waypaper
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+hyprc
+systemctl --user disable swww.service 
+fg
+config hypr
+hyprpaper
+killall hyprpaper
+hyprpaper
+hyprctl monitors
+killall hyprpaper
+hyprpaper
+fg
+hyprctl monitors
+brightnessctl --help
+brightnessctl max
+brightnessctl s +10%
+brightnessctl -d DP-3 s +10%
+sudo pacman -S gammastep
+gammastep 
+gammastep  -o -b 1.0:0.66
+sudo pacman -S hyprsunset 
+hyprsunset 
+hyprctl hyprsunset temperature 0
+hyprctl hyprsunset temperature 1000
+hyprctl hyprsunset temperature 20000
+hyprctl hyprsunset temperature 15000
+hyprctl hyprsunset temperature 10000
+hyprctl hyprsunset --help
+hyprctl hyprsunset temperature
+hyprctl hyprsunset temperature -1
+hyprctl hyprsunset temperature gamma 50
+hyprctl hyprsunset temperature gamma 75
+hyprctl hyprsunset gamma 50
+hyprctl hyprsunset gamma 100
+hyprctl hyprsunset gamma 124
+killall hyprsunset
+yay -S gnome-gamma-tool
+nvidia-settings
+sudo pacman -S nvidia-settings 
+nvidia-settings 
+yay -S wl-gammactl 
+wl-gammactl
+brightnessctl -d DP-3 s +10%
+brightnessctl -l
+gammastep
+hyprshade
+sudo pacman -S hyprshade
+yay -S hyprshade
+yay -R hyprshade
+yay -S hyprshade
+nvim test.glsl
+hyprshade --help
+hyprshade on
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+fg
+hyprshade off
+fg
+hyprshade on
+hyprshade on ./test.glsl
+killall hyprshade 
+hyprshade on ./test.glsl
+hyprshade off
+hyprshade on ./test.glsl
+fg
+hyprshade on ./test.glsl
+nvim gamma.sh
+hyprshade
+hyprshade on --help
+fg
+nvim test.glsl 
+hyprshade on ./test.glsl --var gamma=1.3
+hyprshade on ./test.glsl --var gamma=1.2
+fg
+hyprshade --version
+hyprshade off
+hyprctl seterror disable
+mv test.glsl test.glsl.mustache
+hyprshade on ./test.glsl --var gamma=1.2
+hyprshade on ./test.glsl.mustache --var gamma=1.2
+hyprshade on ./test.glsl.mustache --var gamma=1.3
+hyprshade on ./test.glsl.mustache --var gamma=1.0
+hyprshade on ./test.glsl.mustache --var gamma=1.15
+hyprshade on ./test.glsl.mustache --var gamma=1.11
+mkdir ~/.local/share/hyprshade/shaders -p
+mkdir ~/.local/share/hyprshade
+mkdir ~/.local/share/hyprshade/shaders
+mkdir ~/.local/share/hyprshade/shaders -h 
+mkdir --help
+mkdir -p
+which mkdir
+rm -rf ~/.local/share/hyprshade/
+mkdir ~/.local/share/hyprshade/shaders
+mv test.glsl.mustache ~/.local/share/hyprshade/shaders/gamma.glsl.mustache
+cd ~/.local/share/
+dot add hyprshade/
+fg
+ls 
+fg
+config dotbin
+chmod +x ~/.local/bin/dotbin/gamma 
+gamma
+gamma 1.1
+fg
+gamma
+gamma 1.1
+gamma 1.2
+fg
+gamma 1.1
+gamma
+gamma 1.2
+gamma 2
+gamma
+ss
+which ss
+xrandr --output DP-3 --primary
+gamma 1.1
+config hypr
+gamma
+gamma 1.1
+gamma 
+fg
+gamma
+gamma 2
+gamma 3
+gamma 9
+gamma
+gamma 1.1
+gamma
+hyprpanel help
+hyprpanel --help
+tldr hyprpanel
+config hypr
+hyprpanel bri
+hyprpanel explain
+gamma 1.2
+gamma 
+cd repos
+git clone https://github.com/Beastwick18/gltest
+cd gltest
+nvim makefile 
+make
+sudo pacman -S glfw
+make
+nvim .
+make
+fg
+make
+ls
+./bin/main
+cat todo.md 
+./bin/main
+./bin/main --no-vsync
+fg
+./bin/main --novsync
+fg
+./bin/main novsync
+fg
+cd repos/gltest/
+ls
+fg
+whoami
+pwd
+cd nya
+ls
+pwd
+fg
+nvim .
+cargo run
+killall swww 
+btop
+killall swww-daemon
+config hypr
+crontab
+systemctl --user status swww
+systemctl --user disable swww
+systemctl --user status swww
+systemctl --user stop swww
+systemctl --user stop swww-daemon
+systemctl --user list-units 
+systemctl --user list-unit-files 
+systemctl --user list-unit-files | nvim
+sudo systemctl disable swww
+sudo systemctl disable swww-daemon
+sudo systemctl disable waypaper
+systemctl --user disable waypaper
+config hypr
+ls ~/.config/systemd/user/
+systemctl --user disable wl-gammarelay.service 
+fg
+nvim .
+cd n
+nvim .
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+killall nyaa
+cargo run
+fg
+killall nyaa
+cargo run
+fg
+cargo run
+fg
+killall nyaa
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+gamma 1.1
+gamma 1.15
+gamma
+fg
+cargo build --releas
+cargo build --release
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo test
+fg
+cd r
+cd n
+cargo test
+fg
+cargo run
+cargo test
+cargo test
+fg
+cargo test
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+job list
+job unfreeze 1
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run 
+fgh
+fg
+job unfreeze 1
+job unfreeze
+job unfreeze --help
+fg
+nvim
+nyaa
+job list
+job list | last
+job list | last | get id
+fg
+job list | last | get id
+fg
+job unfreeze (job list | last | get id)
+nvim
+nyaa
+fg
+exit
+job list
+config nu
+cd n
+nvim .
+cargo run
+fg
+cargo test
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+job list
+alias fg
+fg
+job unfreeze (job list | last | get id)
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo test
+git add .
+git feat "default keybinds and overrides"
+git push
+fg
+exit
+cd n
+nvim .
+cargo run
+cargo run --releas
+cargo run --release
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+cargo run
+fg
+exit
+cd repos/n
+nvim .
+cargo run
+fg
+rg general
+fg
+gamma 1.1
+gamma 1.15
+config hypr
+gamma 1.15
+gamma
+gamma 1.15
+sudo pacman -S kdeconnect 
+asdf
+fg
+fg
+xrandr --output DP-3 --primary
+killall otd-daemon 
+gamma 1.15
+gamma 
+gamma 1.15
+gamma
+gamma 1.15
+cd ~/.local/share/hyprshade/shaders/
+nvim .
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+hyprctl seterror disable
+hyprshade off
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade off
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade off
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+hyprshade off
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+fg
+hyprshade on ./test.glsl.mustache
+hyprshade on ./test.glsl.mustache --var value=0.55
+hyprshade on ./test.glsl.mustache --var value=0.45
+hyprshade on ./test.glsl.mustache --var value=0.
+fg
+hyprshade on ./test.glsl.mustache --var value=0.4
+fg
+hyprshade on ./test.glsl.mustache --var value=0.4
+hyprshade on ./test.glsl.mustache --var value=0.45
+hyprctl seterror disable
+hyprshade on ./test.glsl.mustache --var value=0.3
+hyprshade on ./test.glsl.mustache --var value=0.7
+hyprshade on ./test.glsl.mustache --var value=0.8
+hyprshade on ./test.glsl.mustache --var value=0.45
+hyprshade on ./test.glsl.mustache --var value=0.1
+hyprshade on ./test.glsl.mustache --var value=0.45
+hyprshade on ./test.glsl.mustache --var value=0.4
+hyprshade on ./test.glsl.mustache --var value=0.5
+hyprshade on ./test.glsl.mustache --var value=0.6
+fg
+hyprshade off
+hyprshade on ./test.glsl.mustache --var value=0.35
+hyprshade on ./test.glsl.mustache --var value=0.3
+hyprshade on ./test.glsl.mustache --var value=0.1
+hyprshade on ./test.glsl.mustache --var value=0.3
+hyprshade on ./test.glsl.mustache --var value=1
+hyprshade on ./test.glsl.mustache --var value=1.1
+hyprshade on ./test.glsl.mustache --var value=1.5
+hyprshade on ./test.glsl.mustache --var value=0.5
+hyprshade on ./test.glsl.mustache --var value=0.9
+hyprshade on ./test.glsl.mustache --var value=0.8
+hyprshade on ./test.glsl.mustache --var value=0.3
+hyprshade on ./test.glsl.mustache --var value=0.35
+hyprshade on ./test.glsl.mustache --var value=0.3
+hyprshade on ./test.glsl.mustache --var value=0.46
+hyprshade on ./test.glsl.mustache --var value=0.43
+hyprshade on ./test.glsl.mustache --var value=0.4
+hyprshade on ./test.glsl.mustache --var value=0.5
+hyprshade off
+hyprshade on ./test.glsl.mustache --var value=0.4
+hyprshade off
+cd ~/.local/share/hyprshade/shaders/
+ls
+mv test.glsl.mustache osu.glsl.mustache
+ls
+cd ..
+ls
+z ..
+cd -
+c d.
+cd .
+cd ..
+cd ~
+cd -
+cd ..
+..
+cd shaders/
+which cd
+ls
+..
+ls
+dot add shaders
+dot unadd shaders
+ls
+cd ..
+dot add hyprshade
+ls
+pwd
+cd hyprshade
+config dotbin
+filter 1.1
+fg
+osu
+osu 1.1
+osu 0
+osu 0.5
+osu 0.4
+osu 0.3
+osu 0
+osu
+nvim ~/.config/hypr/hyprland.conf 
+nvim hyprshade
+config hyprshade
+cd ~/.local/share/hyprshade/shaders/
+ls
+pwd
+cd ..
+hyprshade on ./crt.glsl.mustache
+fg
+hyprctl seterror disable
+fg
+hyprctl seterror disable
+hyprshade on ./crt.glsl.mustache
+hyprctl seterror disable
+fg
+hyprctl seterror disable
+hyprshade on ./crt.glsl.mustache
+hyprctl seterror disable
+cd repos/dotfiles/
+git add .

@@ -1,0 +1,5 @@
+#!/bin/bash
+#start swww
+dir=${WALLPAPERS_DIR:-~/wallpapers}
+WALLPAPER=$(find "$dir" -type f | shuf -n 1)
+swww img "$WALLPAPER" --transition-type=center --transition-fps=165 --transition-step=180 --transition-bezier=0.5,0.0,0.5,1.0 --transition-duration=1.5

@@ -2,7 +2,6 @@
 
 import os
 from pathlib import Path
-from typing import Optional
 from subprocess import run
 from time import strftime
 from sys import argv
@@ -12,36 +11,41 @@ import dotlib
 MAP_FILE = "dotfiles.json"
 APP_NAME = "dot"
 
+
 @dotlib.cmd(desc="Open the mapped config path in the default $EDITOR")
-def config(name: Optional[str]):
-    if 'EDITOR' not in os.environ or len(os.environ['EDITOR']) == 0:
-        editor = 'vim'
+def config(name: str | None):
+    if "EDITOR" not in os.environ or len(os.environ["EDITOR"]) == 0:
+        editor = "vim"
     else:
-        editor = os.environ['EDITOR']
+        editor = os.environ["EDITOR"]
 
     if name is None:
-        run([editor, exe])
+        _ = run([editor, exe])
         return 0
 
     if name not in cfg:
         for k, v in cfg.items():
-            if os.path.basename(k.rstrip('/')) == name:
-                run([editor, os.path.expanduser(v)])
+            if os.path.basename(k.rstrip("/")) == name:
+                _ = run([editor, os.path.expanduser(v)])
                 return 0
 
         for k, v in cfg.items():
-            if os.path.basename(v.rstrip('/')) == name:
-                run([editor, os.path.expanduser(v)])
+            if os.path.basename(v.rstrip("/")) == name:
+                _ = run([editor, os.path.expanduser(v)])
                 return 0
 
-        print(f'ERROR: "{name}" does not map to a known config path. See `dot list` for all mappings')
+        print(
+            f'ERROR: "{name}" does not map to a known config path. See `dot list` for all mappings'
+        )
         return 1
 
-    run([editor, os.path.expanduser(cfg[name])])
+    _ = run([editor, os.path.expanduser(cfg[name])])
+
 
 @dotlib.cmd(desc="Open a new shell in the same directory as your dotfiles")
 def cd():
-    run([os.environ['SHELL']], cwd=exe)
+    _ = run([os.environ["SHELL"]], cwd=exe)
+
 
 @dotlib.cmd(desc="Install dotfiles by creating symlinks")
 def install(names: list[str]):
@@ -56,29 +60,33 @@ def install(names: list[str]):
         dotlib.create_link(cfg, k)
     os.chdir(cwd)
 
+
 @dotlib.cmd(desc="Sync dotfiles with remote")
 def sync():
     date = strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    run(["git", "add", "--all"], cwd=exe)
-    run(["git", "commit", "-m", date], cwd=exe)
-    run(["git", "pull"], cwd=exe)
-    run(["git", "push"], cwd=exe)
+    _ = run(["git", "add", "--all"], cwd=exe)
+    _ = run(["git", "commit", "-m", date], cwd=exe)
+    _ = run(["git", "pull"], cwd=exe)
+    _ = run(["git", "push"], cwd=exe)
+
 
 @dotlib.cmd(desc="Pull any changes from remote")
 def pull():
-    run(["git", "pull"], cwd=exe)
+    _ = run(["git", "pull"], cwd=exe)
+
 
 @dotlib.cmd(desc="Push any local changes to remote")
 def push():
     date = strftime("%m-%d-%y %H:%M:%S")
     print(date)
-    run(["git", "add", "--all"], cwd=exe)
-    run(["git", "commit", "-m", date], cwd=exe)
-    run(["git", "push"], cwd=exe)
+    _ = run(["git", "add", "--all"], cwd=exe)
+    _ = run(["git", "commit", "-m", date], cwd=exe)
+    _ = run(["git", "push"], cwd=exe)
+
 
 @dotlib.cmd(desc="Add a local file/dir to the dotfile repo")
-def add(path: str, map_to: Optional[str]):
+def add(path: str, map_to: str | None):
     home = str(Path.home().absolute())
     orig = Path(path).expanduser().absolute()
     if not map_to:
@@ -105,13 +113,16 @@ def add(path: str, map_to: Optional[str]):
         print(f"{dotfile}: Already exists")
         return 1
     print(f"mv {orig} -> {dotfile}")
-    orig.rename(dotfile)
+    _ = orig.rename(dotfile)
     orig.symlink_to(dotfile, target_is_directory=is_dir)
     cfg[dotfile.name] = link_to
     print(f"map {dotfile.name} -> {link_to}")
     dotlib.write_map(cfg, exe.joinpath(MAP_FILE))
 
-@dotlib.cmd(desc="Unadd a dotfile by returning the file to its original location outside of the repo")
+
+@dotlib.cmd(
+    desc="Unadd a dotfile by returning the file to its original location outside of the repo"
+)
 def unadd(name: str):
     if name not in cfg:
         print(f'"{name}" does not exist in repo')
@@ -125,34 +136,36 @@ def unadd(name: str):
         print(f'File does not exist in repo: "{repo}"')
         return 1
     if local.readlink() != repo:
-        print(f'The repo file ({repo}) does not link to the local file ({local})')
+        print(f"The repo file ({repo}) does not link to the local file ({local})")
         return 1
 
     if not dotlib.ask(f'Unadd "{name}" ({local})?'):
         return 0
 
     local.unlink()
-    repo.rename(local)
+    _ = repo.rename(local)
     del cfg[name]
 
     dotlib.write_map(cfg, exe.joinpath(MAP_FILE))
 
+
 @dotlib.cmd(desc="Show unsynced changes")
 def diff():
-    run(["git", "diff"], cwd=exe)
+    _ = run(["git", "diff"], cwd=exe)
 
 
 @dotlib.cmd(name="list", desc="List all mapped dotfiles")
 def list_map():
     print(f"{MAP_FILE}:")
-    l = 0
+    max_len = 0
     for k in cfg.keys():
-        l = max(l, len(k))
+        max_len = max(max_len, len(k))
 
     for k, v in cfg.items():
-        print(f"  {k:>{l}} -> {v}")
+        print(f"  {k:>{max_len}} -> {v}")
 
-def main(args):
+
+def main(args: list[str]):
     global cfg, exe, cwd
     cwd = Path.cwd().expanduser().absolute()
     exe = Path(args[0]).expanduser().absolute()
@@ -163,6 +176,7 @@ def main(args):
     cfg = dotlib.load_map(exe.joinpath(MAP_FILE))
 
     dotlib.run(APP_NAME, args, help_cmd="help")
+
 
 if __name__ == "__main__":
     main(argv)
