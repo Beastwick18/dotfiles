@@ -214,10 +214,23 @@ return {
 	{
 		"saghen/blink.cmp",
 		opts = {
+			sources = {
+				-- adding any nvim-cmp sources here will enable them
+				-- with blink.compat
+				compat = {},
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
 			keymap = {
 				preset = "super-tab",
 				["<C-k>"] = { "select_prev", "fallback" },
 				["<C-j>"] = { "select_next", "fallback" },
+
+				-- workaround because lazyvim is too lazy to merge PR
+				["<Tab>"] = {
+					require("blink.cmp.keymap.presets").get("super-tab")["<Tab>"][1],
+					require("lazyvim.util.cmp").map({ "snippet_forward", "ai_accept" }),
+					"fallback",
+				},
 
 				-- -- disable a keymap from the preset
 				-- ["<C-e>"] = {},

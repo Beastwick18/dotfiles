@@ -1,6 +1,7 @@
 #!/bin/sh
 
 if [[ -n "$1" ]]; then
+  hyprctl seterror disable &>/dev/null || true
   hyprshade on ~/.local/share/hyprshade/shaders/osu.glsl.mustache --var value=$1
 else
   hyprshade off

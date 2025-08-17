@@ -62,15 +62,18 @@ map("n", "<F2>", function()
 end, { desc = "Rename", noremap = false })
 vim.cmd([[vmap S ys]])
 
--- map("n", "<leader>p", function()
--- 	-- require("nabla").enable_virt({
--- 	-- 	autogen = true,
--- 	-- 	silent = true,
--- 	-- 	align_center = false,
--- 	-- })
--- 	require("nabla").toggle_virt({
--- 		autogen = true,
--- 		silent = true,
--- 		align_center = false,
--- 	})
--- end)
+-- -- map("n", "m", "h") -- move Left
+-- map("n", "n", "gj") -- move Down (g to allow move within wrapped lines)
+-- map("n", "e", "gk") -- move Up (g to allow move within wrapped lines)
+-- map("n", "i", "l") -- move Right
+-- map("n", "t", "i") -- (t)ype           replaces (i)nsert
+-- map("n", "T", "I") -- (T)ype at bol    replaces (I)nsert
+-- map("n", "E", "e") -- end of word      replaces (e)nd
+-- map("n", "k", "n") -- next match       replaces (n)ext
+-- map("n", "K", "N") -- previous match   replaces (N) prev
+--
+-- -- Visual Colemak
+-- -- map("v", "m", "h") -- move Left
+-- map("v", "n", "gj") -- move Down (g to allow move within wrapped lines)
+-- map("v", "e", "gk") -- move Up (g to allow move within wrapped lines)
+-- map("v", "I", "l") -- move Right - shifted to fix [v]isual[i]n[...]

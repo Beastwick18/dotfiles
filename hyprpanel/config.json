@@ -49,7 +49,6 @@
       ],
       "right": [
         "volume",
-        "network",
         "systray",
         "clock",
         "notifications"
@@ -66,21 +65,7 @@
       ],
       "right": [
         "volume",
-        "clock",
-        "notifications"
-      ]
-    },
-    "2": {
-      "left": [
-        "dashboard",
-        "workspaces",
-        "windowtitle"
-      ],
-      "middle": [
-        "media"
-      ],
-      "right": [
-        "volume",
+        "network",
         "clock",
         "notifications"
       ]
@@ -92,7 +77,9 @@
   "theme.bar.buttons.workspaces.occupied": "#198282",
   "theme.bar.buttons.workspaces.available": "#125b5a",
   "bar.workspaces.show_icons": false,
-  "bar.workspaces.showWsIcons": false,
-  "bar.workspaces.showApplicationIcons": false,
-  "bar.workspaces.show_numbered": false
+  "bar.workspaces.showWsIcons": true,
+  "bar.workspaces.showApplicationIcons": true,
+  "bar.workspaces.show_numbered": false,
+  "tear": true,
+  "theme.bar.buttons.systray.enableBorder": false
 }

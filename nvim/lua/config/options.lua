@@ -4,3 +4,5 @@
 
 vim.cmd([[set noswapfile]])
 vim.lsp.enable("nushell")
+vim.lsp.enable("qmlls")
+vim.api.nvim_set_hl(0, "@lsp.type.function.rust", {}) -- Disable highligting for leptos, let TS handle it
