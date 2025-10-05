@@ -1,0 +1,39 @@
+theme = "catppuccin_mocha_transparent"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "block"
+
+[editor]
+end-of-line-diagnostics = "hint"
+bufferline = "always"
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
+[keys.normal]
+G = "goto_file_end"
+esc = ["collapse_selection", "keep_primary_selection"]
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after", "collapse_selection"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before", "collapse_selection"]
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
+C-c = ":buffer-close"
+0 = "goto_line_start"
+J = ["goto_next_paragraph", "collapse_selection"]
+K = ["goto_prev_paragraph", "collapse_selection", "move_line_up"]
+H = "goto_first_nonwhitespace"
+L = "goto_line_end"
+"C-/" = "toggle_comments"
+
+[keys.normal.g]
+n = "goto_next_change"
+p = "goto_prev_change"
+
+[keys.normal.";"]
+w = ":write"
+q = ":quit"
+
+[keys.normal." "]
+n = "goto_next_diag"
+p = "goto_prev_diag"

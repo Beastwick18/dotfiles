@@ -6,7 +6,7 @@ $env.XDG_CACHE_HOME = $"($env.HOME)/.cache"
 $env.PATH = ($env.PATH | split row (char esep) | prepend [$"($env.HOME)/.local/bin/dotbin", $"($env.HOME)/.local/bin", $"($env.HOME)/.local/share/cargo/bin"])
 $env.STARSHIP_CONFIG = $"($env.HOME)/.config/starship/starship.toml"
 $env.WALLPAPERS_DIR = $"($env.HOME)/Pictures/wallpapers"
-$env.EDITOR = "nvim"
+$env.EDITOR = "helix"
 
 # XDG-ninja
 $env.CARGO_HOME = $"($env.XDG_DATA_HOME)/cargo" # cargo

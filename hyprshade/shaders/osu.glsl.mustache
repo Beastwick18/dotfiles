@@ -1,6 +1,9 @@
+#version 300 es
 precision highp float;
-varying vec2 v_texcoord;
+
+in vec2 v_texcoord;
 uniform sampler2D tex;
+out vec4 fragColor;
 
 const float Value = float({{#nc}}{{value}} ? 1.0{{/nc}});
 
@@ -15,5 +18,5 @@ void main()
   // }
   vec3 color = vec3(pixColor[0], pixColor[1], pixColor[2]);
 
-  gl_FragColor.rgb = color;
+  fragColor.rgb = color;
 }

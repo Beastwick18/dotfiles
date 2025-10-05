@@ -184,6 +184,7 @@ alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias cat='bat'
 alias config='dot config'
 alias icat="kitten icat"
+alias ssh="kitten ssh"
 
 alias d="dot"
 alias dp="dot push"
