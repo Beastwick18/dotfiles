@@ -32,7 +32,7 @@ return {
 		},
 	},
 	{
-		"echasnovski/mini.surround",
+		"nvim-mini/mini.surround",
 		opts = {
 			mappings = {
 				add = "ys",
@@ -46,14 +46,14 @@ return {
 		},
 	},
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		opts = function(_, opts)
 			opts.ensure_installed = {}
 			opts.automatic_installation = { exclude = { "tsserver" } }
 		end,
 	},
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		enabled = true,
 		-- opts = function(_, opts)
 		-- 	opts.ensure_installed = {}
@@ -97,17 +97,18 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		init = function()
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			keys[#keys + 1] = { "K", false }
-			keys[#keys + 1] = { "<c-k>", false, mode = "i" }
-		end,
 		opts = {
 			diagnostics = {
 				virtual_text = false,
 			},
 			inlay_hints = { enabled = true },
 			servers = {
+				["*"] = {
+					keys = {
+						{ "K", false },
+						{ "<c-k>", false, mode = "i" },
+					},
+				},
 				taplo = {
 					keys = {},
 				},
@@ -192,7 +193,7 @@ return {
 	-- 	-- }
 	-- },
 	{
-		"echasnovski/mini.indentscope",
+		"nvim-mini/mini.indentscope",
 		opts = {
 			draw = {
 				delay = 000,

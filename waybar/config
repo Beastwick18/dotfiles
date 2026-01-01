@@ -1,7 +1,7 @@
 // vim:ft=json
 {
   "layer": "top",
-  "modules-left": ["custom/arch", "hyprland/workspaces"],
+  "modules-left": ["custom/arch", "wlr/taskbar"],
   "modules-center": ["clock"],
   "modules-right": ["backlight", "pulseaudio", "network", "battery", "tray"],
   "custom/arch": {
@@ -18,6 +18,14 @@
       "active": "",
       "default": ""
     }
+  },
+  "wlr/taskbar": {
+    "format": "{title}",
+    "icon-size": 14,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
+    "on-click": "minimize",
+    "on-click-middle": "close",
   },
   "clock": {
     "format": "<span color='#b4befe'>  </span>{:%I:%M %b %d, %a}",

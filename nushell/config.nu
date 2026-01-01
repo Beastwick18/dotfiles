@@ -2,15 +2,29 @@ source `./autoload.nu`
 source `./completions.nu`
 
 # fg -> unfreeze background job like POSIX terminals
+# alias fg = try { job unfreeze (job list | sort-by id | last | get id) } catch { print "fg: no current job" }
 alias yay = paru
-alias fg = try { job unfreeze (job list | last | get id) } catch { print "fg: no current job" }
 alias config = dot config
-alias hx = helix
+alias zj = zellij
+alias click = sudo -E osu-clicker --volume 1.2 --hit-file /home/brad/repos/osu-clicker/assets/hit.wav -d 0 -z KEY_X -x KEY_C -b 64
+alias osu-auto-gamma = osu-auto-gamma
 
 alias yarn = yarn --use-yarnrc $"($env.XDG_CONFIG_HOME)/yarn/config"
 alias wget = wget --hsts-file=$"($env.XDG_DATA_HOME)/wget-hsts"
 alias nvidia-settings = nvidia-settings --config=$"($env.XDG_CONFIG_HOME)/nvidia/settings"
 alias ssh = kitten ssh
+
+def config-reload [] {
+  exec nu
+}
+
+def fg [] {
+  try {
+    job unfreeze (job list | get id | math max)
+  } catch {
+    print "fg: no current job"
+  }
+}
 
 def "ssh pf" [address: string, port: number, host_port?: number] {
   ssh -L $"($host_port | default $port):localhost:($port)" -Nf $address
@@ -40,7 +54,6 @@ def "ssh pf list" [] {
 }
 
 source ~/.config/nushell/themes/catppuccin_mocha.nu
-
 
 # Hide banner
 $env.config.show_banner = false
