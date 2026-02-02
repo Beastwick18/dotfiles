@@ -8,6 +8,8 @@ alias config = dot config
 alias zj = zellij
 alias click = sudo -E osu-clicker --volume 1.2 --hit-file /home/brad/repos/osu-clicker/assets/hit.wav -d 0 -z KEY_X -x KEY_C -b 64
 alias osu-auto-gamma = osu-auto-gamma
+alias ls = ls -a
+alias df = dysk
 
 alias yarn = yarn --use-yarnrc $"($env.XDG_CONFIG_HOME)/yarn/config"
 alias wget = wget --hsts-file=$"($env.XDG_DATA_HOME)/wget-hsts"

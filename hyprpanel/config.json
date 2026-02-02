@@ -38,22 +38,6 @@
   "menus.power.showLabel": true,
   "bar.battery.label": false,
   "bar.layouts": {
-    "0": {
-      "left": [
-        "dashboard",
-        "workspaces",
-        "windowtitle"
-      ],
-      "middle": [
-        "media"
-      ],
-      "right": [
-        "volume",
-        "systray",
-        "clock",
-        "notifications"
-      ]
-    },
     "1": {
       "left": [
         "dashboard",
@@ -65,7 +49,23 @@
       ],
       "right": [
         "volume",
+        "systray",
         "network",
+        "clock",
+        "notifications"
+      ]
+    },
+    "0": {
+      "left": [
+        "dashboard",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "systray",
         "clock",
         "notifications"
       ]

@@ -1,0 +1,25 @@
+#version 300 es
+precision highp float;
+
+in vec2 v_texcoord;
+uniform sampler2D tex;
+out vec4 fragColor;
+
+const float Value = float({{#nc}}{{value}} ? 1.0{{/nc}});
+
+void main()
+{
+  vec4 pixColor = texture2D(tex, v_texcoord);
+  float average = (pixColor[0] + pixColor[1] + pixColor[2]) / 3.0;
+  //float whiteness = abs(abs(pixColor[0] - average) - abs(pixColor[1] - average) - abs(pixColor[2] - average));
+  float gamma = min(max(0.01, 0.0777006 * pow(2.71828182, 1.48343 * max(-4.0, Value-8.0))), 2.0);
+  pixColor[0] = pixColor[0] * pixColor[0] * (1.0 - gamma) + pixColor[0] * gamma;
+  pixColor[1] = pixColor[1] * pixColor[1] * (1.0 - gamma) + pixColor[1] * gamma;
+  pixColor[2] = pixColor[2] * pixColor[2] * (1.0 - gamma) + pixColor[2] * gamma;
+  // pixColor[0] = pixColor[0] * pixColor[0] * (1.0 - Value) + pixColor[0] * Value;
+  // pixColor[1] = pixColor[1] * pixColor[1] * (1.0 - Value) + pixColor[1] * Value;
+  // pixColor[2] = pixColor[2] * pixColor[2] * (1.0 - Value) + pixColor[2] * Value;
+  vec3 color = vec3(pixColor[0], pixColor[1], pixColor[2]);
+
+  fragColor.rgb = color;
+}
