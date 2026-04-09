@@ -10,6 +10,9 @@ local function map(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+map("n", "j", "gj")
+map("n", "k", "gk")
+
 -- Tab movement
 map("n", "<tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
@@ -42,6 +45,12 @@ map("i", "<c-j>", "<cmd>move +1<cr>", { desc = "Move down in insert mode" })
 map("i", "<c-k>", "<cmd>move -2<cr>", { desc = "Move up in insert mode" })
 map("i", "<c-l>", "<right>", { desc = "Move right in insert mode" })
 
+-- Normal mode window movement
+map("n", "<c-h>", "<C-w>h", { desc = "Move to left window" })
+map("n", "<c-j>", "<C-w>j", { desc = "Move to window below" })
+map("n", "<c-k>", "<C-w>k", { desc = "Move to window above" })
+map("n", "<c-l>", "<C-w>l", { desc = "Move to right window" })
+
 map("n", "<F1>", "<nop>")
 map("i", "<F1>", "<nop>")
 
@@ -52,8 +61,12 @@ map("n", "gp", "<cmd>Gitsigns prev_hunk<cr>")
 map("n", "<leader>qf", vim.lsp.buf.code_action)
 map("n", "<C-.>", vim.lsp.buf.code_action)
 map("n", "<C-n>", vim.lsp.buf.code_action)
-map("n", "<leader>n", vim.diagnostic.goto_next)
-map("n", "<leader>p", vim.diagnostic.goto_prev)
+map("n", "<leader>n", function()
+	vim.diagnostic.jump({ count = -1, float = true })
+end)
+map("n", "<leader>p", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end)
 map("i", "<C-.>", vim.lsp.buf.code_action)
 map("i", "<C-n>", function()
 	vim.lsp.buf.code_action()
@@ -65,6 +78,9 @@ map("n", "<F2>", function()
 	vim.lsp.buf.rename()
 end, { desc = "Rename", noremap = false })
 vim.cmd([[vmap S ys]])
+
+-- Neotree mappings
+map({ "n", "i", "t" }, "<C-\\>", "<cmd>Neotree toggle<cr>", { noremap = true })
 
 -- -- map("n", "m", "h") -- move Left
 -- map("n", "n", "gj") -- move Down (g to allow move within wrapped lines)

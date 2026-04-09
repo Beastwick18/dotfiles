@@ -17,5 +17,6 @@
   "nushell": "~/.config/nushell",
   "starship": "~/.config/starship",
   "hyprshade": "~/.local/share/hyprshade",
-  "helix": "~/.config/helix"
+  "helix": "~/.config/helix",
+  "nvim-pack": "~/.config/nvim-pack"
 }
